@@ -1,0 +1,10 @@
+.book-img-container {
+  width: 200px;
+  height: 200px;
+}
+.book-img-container img {
+  width: 200%;
+  height: 100%;
+}
+
+/*# sourceMappingURL=styles.css.map */

@@ -1,0 +1,36 @@
+#books-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    ._100p {
+        width: 100%;
+        text-align: center;
+    }
+
+    .book-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        cursor: pointer;
+        width: 140px;
+
+        div {
+            text-align: center;
+            width: 100%;
+        }
+
+        .book-img-container {
+            width: 140px;
+            height: 200px;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+    }
+
+}
