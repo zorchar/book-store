@@ -72,7 +72,9 @@ const createBookContainer = () => {
 
 const addNameToContainer = (bookName, container) => {
     const nameContainer = document.createElement('div')
-    nameContainer.innerText = bookName
+    const h3 = document.createElement('h3')
+    h3.innerText = bookName
+    nameContainer.append(h3)
     container.append(nameContainer)
 }
 
@@ -120,8 +122,8 @@ const addClickEventToQueryAll = (queryAllText, callback) => {
 const appendDBBookToContainer = (dbbook, container) => {
     const bookContainer = createBookContainer()
     bookContainer.id = dbbook.name
-    addNameToContainer(dbbook.name, bookContainer)
-    addAuthorToContainer(dbbook.author.name, bookContainer)
+    addNameToContainer(dbbook.name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()), bookContainer)
+    addAuthorToContainer(dbbook.author.name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()), bookContainer)
     addImageToContainer(dbbook.image, bookContainer, 'book-img-container')
     appendElToEl(bookContainer, container)
 }
@@ -132,7 +134,8 @@ const primaryFunc = async () => {
         appendDBBookToContainer(element, '#books-container')
     });
     addClickEventToQueryAll('.book-container', function () {
-        console.log(this.id);
+        const finalSentence = this.id.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+        console.log(finalSentence);
     })
 }
 

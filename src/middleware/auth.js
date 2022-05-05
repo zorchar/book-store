@@ -12,17 +12,23 @@ const auth = async (req, res, next) => {
             }
         )
 
-        if (!user)
-            throw new Error()
-
+        if (!user) {
+            const err = new Error("No user found")
+            err.status = 401
+            throw err
+        }
         req.token = token
         req.user = user
         next()
     } catch (error) {
-        res.status(401).send({
-            status: 401,
-            message: 'no authentication'
-        })
+        error.status = 401
+        error.message = 'no authentication'
+        next(error)
+
+        // res.status(401).send({
+        //     status: 401,
+        //     message: 'no authentication'
+        // })
     }
 }
 

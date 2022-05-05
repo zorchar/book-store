@@ -4,6 +4,18 @@ const auth = require('../middleware/auth')
 
 const router = new express.Router()
 
+
+router.get('', auth, async (req, res, next) => {
+    try {
+        res.render('index',
+            {
+                signInOrOut: `<div id="sign-out" class="nav-item">Sign Out</div>`
+            })
+    } catch (error) {
+        return next(error)
+    }
+})
+
 router.post('/user/new_user', async (req, res) => {
     const user = new User(req.body)
     try {
@@ -49,6 +61,10 @@ router.patch('/user/edit', auth, async (req, res, next) => {
         }
 
         await user.save()
+        // res.render('index',
+        //     {
+        //         signInOrOut: `<div id="sign-out" class="nav-item">Sign Out</div>`
+        //     })
         res.send(user)
     }
     catch (error) {
@@ -117,6 +133,12 @@ router.post('/user/add_to_cart', async (req, res) => {
 
 router.use((error, req, res, next) => {
     console.log("hello from error handler")
+    if (error.message === 'no authentication') {
+        return res.render('index',
+            {
+                signInOrOut: `<div id="sign-up" class="nav-item">Sign Up</div><div id="sign-in" class="nav-item">Sign In</div>`
+            })
+    }
 
     res.status(error.status).send(
         {
