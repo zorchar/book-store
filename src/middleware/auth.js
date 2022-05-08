@@ -21,6 +21,7 @@ const auth = async (req, res, next) => {
         req.user = user
         next()
     } catch (error) {
+        console.log('error should appear');
         error.status = 401
         error.message = 'no authentication'
         next(error)

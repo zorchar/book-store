@@ -1,0 +1,2 @@
+אי אפשר לרנדר HTML בעזרת FETCH. למשלת לאחר בקשת FETCH, לא יעזור לעשות redirect מהשרת.
+FETCH לא קולט ERRORS. יש להשתמש ב response.ok כדי לתפוס. כלומר, CATCH לא יתפוס.

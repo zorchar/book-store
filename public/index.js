@@ -1,5 +1,102 @@
 const url = 'http://localhost:3000'
 
+const signInModal = document.querySelector('#sign-in-modal-container')
+const addToCartModal = document.querySelector('#add-to-cart-modal-container')
+
+// const signOutButton = document.querySelector('#sign-out')
+// if (signOutButton != null) {
+//     document.querySelector('#sign-out').addEventListener('click', () => {
+//         userLogout()
+//     })
+// }
+
+document.querySelector('#add-to-cart-modal-backdrop').addEventListener('click', () => {
+    addToCartModal.classList.add('display-none')
+})
+
+document.querySelector('#sign-in')?.addEventListener('click', () => {
+    signInModal.classList.remove('display-none')
+})
+
+document.querySelector('#sign-in-modal-backdrop').addEventListener('click', () => {
+    signInModal.classList.add('display-none')
+})
+
+document.querySelector('#sign-in-form').addEventListener('submit', async (event) => {
+    event.preventDefault()
+    try {
+        const email = document.querySelector('#sign-in-email-input').value
+        const password = document.querySelector('#sign-in-password-input').value
+
+        res = await userLogin(email, password)
+        window.location.replace(url + '/user/' + res.user.name)
+
+        // window.location.replace(url)
+        // navBarToSignedIn()
+        // signInModal.classList.add('display-none')
+    }
+    catch (error) {
+        console.log(error);
+    }
+})
+
+document.querySelector('#home-page').addEventListener('click', async (event) => {
+    try {
+        const user = await authUser()
+        window.location.replace(url + '/user/' + user.name)
+
+        // signInModal.classList.add('display-none')
+    }
+    catch (error) {
+        window.location.replace(url)
+        console.log(error);
+    }
+})
+
+document.querySelector('#sign-out')?.addEventListener('click', async (event) => {
+    try {
+        const user = await userLogout()
+        window.location.replace(url)
+
+        // signInModal.classList.add('display-none')
+    }
+    catch (error) {
+        // window.location.replace(url)// should or should not keep?
+        console.log(error);
+    }
+})
+
+
+const authUser = async () => {
+    const response = await fetch(url + '/user/auth_user',
+        {
+            method: 'Get',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+        }
+    )
+    const res = await response.json()
+    if (!response.ok) {
+        throw res
+    }
+    return res
+}
+
+document.querySelector('#add-to-cart-form').addEventListener('submit', (event) => {
+    event.preventDefault()
+    addToCartModal.classList.add('display-none')
+    addToCart(addToCartModal.querySelector('.book-container').name)///////////////////// keep on
+        .then(() => {
+            console.log('book added');
+            // window.location.replace(url + '/user/login2')
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+})
+
 const getBooks = async () => {
     const response = await fetch(url + '/books')
     if (!response.ok) return console.log(response.statusText)
@@ -10,6 +107,86 @@ const getBook = async (bookName) => {
     const response = await fetch(`${url}/books/${bookName}`)
     if (!response.ok) return console.log(response.statusText)
     return await response.json()
+}
+
+const userLogin = async (email, password) => {
+    try {
+        const response = await fetch(url + '/user/login',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                        email,
+                        password
+                    }
+                )
+            })
+        const res = await response.json()
+        if (!response.ok) { //// fetch does not handle errors. must check response.ok
+            throw res
+        }
+        localStorage.setItem('token', res.token)
+        return res
+    }
+    catch (error) {
+        console.log('got to catch in userLogin');
+        throw error
+    }
+}
+
+const addToCart = async (bookName) => {
+    try {
+        const response = await fetch(url + '/user/add_to_cart',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify(
+                    {
+                        bookName
+                    }
+                )
+            })
+        const res = await response.json()
+        if (!response.ok) { //// fetch does not handle errors. must check response.ok
+            throw res
+        }
+        return res
+    }
+    catch (error) {
+        console.log('got to catch in userLogin');
+        throw error
+    }
+}
+
+const userLogout = async () => {
+    try {
+        const response = await fetch(url + '/user/logout',
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+            })
+        localStorage.setItem('token', null)//maybe change location or add in another location or add verification with database
+        /////// currently no response sent here
+        // const res = await response.json() 
+        // if (!response.ok) {
+        //     throw res
+        // }
+        // return res
+    }
+    catch (error) {
+        console.log('got to catch in userLogout');
+        throw error
+    }
+
 }
 
 const addAdmin = async (admin) => {
@@ -64,79 +241,63 @@ const findBooks = async (searchString) => {
     return 'No books found.'
 }
 
-const createBookContainer = () => {
-    const div = document.createElement('div')
-    div.classList.add('book-container')
-    return div
-}
-
-const addNameToContainer = (bookName, container) => {
-    const nameContainer = document.createElement('div')
-    const h3 = document.createElement('h3')
-    h3.innerText = bookName
-    nameContainer.append(h3)
-    container.append(nameContainer)
-}
-
-const addAuthorToContainer = (authorName, container) => {
-    const authorNameContainer = document.createElement('div')
-    authorNameContainer.innerText = authorName
-    container.append(authorNameContainer)
-}
-
-const addImageToContainer = (imageLink, container, imgContainerClassName = 'img-container') => { // later think about class name and classname implementation
-    const img = document.createElement('img')
-    const imgContainer = document.createElement('div')
-    img.src = imageLink
-    imgContainer.classList.add(imgContainerClassName)
-    imgContainer.append(img)
-    container.append(imgContainer)
-}
-
-const appendElToEl = (elFrom, elToQueryString) => {
-    document.querySelector(elToQueryString).append(elFrom)
-}
-
-
-// deleteAdmin('lala@gmail.com', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjZmNjNjNTYzNWViNGJiZTVlMTk0NjkiLCJpYXQiOjE2NTE1NzkxNzYsImV4cCI6MTY1MTYwMDc3Nn0.19yn2XUE_a3EYfHdiyIbpOzPf7ZufQbnxI_l9eRezUM').then((res) => {
-//     console.log(res);
-// })
-
-// getBook("test_book6").then((res) => {
-//     console.log(res);
-// })
-
-// getBooks().
-//     then((res) => {
-//         res.forEach((element) => {
-//             addImageToDiv(element.image, 'books-container')
-//         });
-//     })
-
 const addClickEventToQueryAll = (queryAllText, callback) => {
     const bookContainers = document.querySelectorAll(queryAllText)
     for (let el of bookContainers)
         el.addEventListener('click', callback)
 }
 
-const appendDBBookToContainer = (dbbook, container) => {
-    const bookContainer = createBookContainer()
-    bookContainer.id = dbbook.name
-    addNameToContainer(dbbook.name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()), bookContainer)
-    addAuthorToContainer(dbbook.author.name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()), bookContainer)
-    addImageToContainer(dbbook.image, bookContainer, 'book-img-container')
-    appendElToEl(bookContainer, container)
-}
-
 const primaryFunc = async () => {
     const dbBooks = await findBooks('')
-    dbBooks.forEach((element) => {
-        appendDBBookToContainer(element, '#books-container')
+    const bookContainer = document.querySelector('#books-container')
+    dbBooks.forEach((book) => {
+        appendDBBookToContainer(book, bookContainer)
     });
     addClickEventToQueryAll('.book-container', function () {
         const finalSentence = this.id.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
         console.log(finalSentence);
     })
+    addClickEventToQueryAll('.book-container', async function () {
+        const bookContainerPlaceholder = addToCartModal.querySelector('.book-container-placeholder')
+        const bookContainer = bookContainerPlaceholder.querySelector('.book-container')
+        if (bookContainer)
+            bookContainerPlaceholder.removeChild(bookContainer)
+        addToCartModal.classList.remove('display-none')//do transition or loading..
+        const book = await getBook(this.id)
+        appendDBBookToContainer(book, bookContainerPlaceholder)
+    })
 }
 
 primaryFunc()
+
+const navBarToSignedIn = () => {
+    document.querySelector('#sign-in').remove()
+    document.querySelector('#sign-up').remove()
+
+    const signOut = document.createElement('div')
+
+    signOut.classList.add('nav-item')
+    signOut.id = 'sign-out'
+    signOut.innerText = 'Sign Out'
+
+    document.querySelector('#nav-right-items').append(signOut)
+}
+
+const navBarToSignedOut = () => {
+    document.querySelector('#sign-out').remove()
+
+    const signIn = document.createElement('div')
+    const signUp = document.createElement('div')
+
+    signIn.classList.add('nav-item')
+    signUp.classList.add('nav-item')
+    signIn.id = 'sign-in'
+    signUp.id = 'sign-up'
+    signIn.innerText = 'Sign In'
+    signUp.innerText = 'Sign Up'
+
+    const navRightItems = document.querySelector('#nav-right-items')
+    navRightItems.insertBefore(signUp, navRightItems.firstChild)
+    navRightItems.insertBefore(signIn, navRightItems.firstChild)
+
+}

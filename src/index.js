@@ -16,7 +16,6 @@ const viewsPath = path.join(__dirname, '../templates/views')
 const partialsPath = path.join(__dirname, '../templates/partials')
 
 const app = express()
-
 app.use(cors())
 app.use(express.json())
 

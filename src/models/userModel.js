@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const Book = require('../models/bookModel')
 
 const userSchema = new mongoose.Schema(
     {
@@ -27,7 +26,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-            minlength: 8,
+            // minlength: 8,
             // validate(value) {
             //     const passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{0,}$/
             //     if (!passRegex.test(value)) {
@@ -40,6 +39,7 @@ const userSchema = new mongoose.Schema(
                 book: {
                     type: mongoose.Schema.Types.ObjectId,
                     ref: 'Book',
+
                 },
                 quantity: {
                     type: Number,
@@ -73,12 +73,16 @@ userSchema.pre('save', async function (next) {
 userSchema.statics.findUserByEmailAndPassword = async (email, password) => {
     const user = await User.findOne({ email })
     if (!user) {
-        throw new Error('Unable to login.')
+        const err = new Error('Unable to login.')
+        err.status = 400
+        throw err
     }
 
     const isPassMatch = await bcrypt.compare(password, user.password)
     if (!isPassMatch) {
-        throw new Error('Unable to login.')
+        const err = new Error('Unable to login.')
+        err.status = 400
+        throw err
     }
 
     return user
@@ -103,7 +107,7 @@ userSchema.methods.generateToken = async function () {
 
 userSchema.methods.addBookToCart = async function (bookID) {
     const user = this
-    const cartMatchingEls = user.cart.filter(e => e.book._id.toString() === bookID)
+    const cartMatchingEls = user.cart.filter(e => e.book._id.toString() === bookID.toString())
 
     if (cartMatchingEls.length > 0) {
         cartMatchingEls[0].quantity = parseInt(cartMatchingEls[0].quantity) + 1
