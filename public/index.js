@@ -36,6 +36,7 @@ document.querySelector('#sign-in-form').addEventListener('submit', async (event)
         // signInModal.classList.add('display-none')
     }
     catch (error) {
+        signInModal.classList.add('display-none')
         console.log(error);
     }
 })
@@ -44,7 +45,6 @@ document.querySelector('#home-page').addEventListener('click', async (event) => 
     try {
         const user = await authUser()
         window.location.replace(url + '/user/' + user.name)
-
         // signInModal.classList.add('display-none')
     }
     catch (error) {
@@ -52,6 +52,42 @@ document.querySelector('#home-page').addEventListener('click', async (event) => 
         console.log(error);
     }
 })
+
+document.querySelector('#admin-page').addEventListener('click', () => {
+    document.querySelector('#sign-in-admin-modal-container').classList.remove('display-none')
+})
+
+document.querySelector('#sign-in-admin-form').addEventListener('submit', async (event) => {
+    event.preventDefault()
+    try {
+        const email = document.querySelector('#sign-in-admin-email-input').value
+        const password = document.querySelector('#sign-in-admin-password-input').value
+
+        res = await adminLogin(email, password)
+        window.location.replace(url + '/admin/' + res.admin.name)
+
+        // window.location.replace(url)
+        // navBarToSignedIn()
+        // signInModal.classList.add('display-none')
+    }
+    catch (error) {
+        signInModal.classList.add('display-none')
+        console.log(error);
+    }
+})
+
+// document.querySelector('#admin-page').addEventListener('click', async (event) => {
+//     try {
+//         const admin = await adminLogin()
+//         window.location.replace(url + '/admin/' + admin.name)
+//         // signInModal.classList.add('display-none')
+//     }
+//     catch (error) {
+//         localStorage.setItem('token', null)
+//         window.location.replace(url)
+//         console.log(error);
+//     }
+// })
 
 document.querySelector('#sign-out')?.addEventListener('click', async (event) => {
     try {
@@ -107,6 +143,35 @@ const getBook = async (bookName) => {
     const response = await fetch(`${url}/books/${bookName}`)
     if (!response.ok) return console.log(response.statusText)
     return await response.json()
+}
+
+const adminLogin = async (email, password) => {
+    try {
+        const response = await fetch(url + '/admin/login',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                        email,
+                        password
+                    }
+                )
+            })
+        const res = await response.json()
+        if (!response.ok) { //// fetch does not handle errors. must check response.ok
+            throw res
+        }
+        localStorage.setItem('token', res.token)
+        return res
+    }
+    catch (error) {
+        console.log('got to catch in adminLogin');
+        throw error
+    }
+
 }
 
 const userLogin = async (email, password) => {

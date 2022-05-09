@@ -9,21 +9,24 @@ const authAdmin = async (req, res, next) => {
         const admin = await Admin.findOne(
             {
                 _id: data._id,
-                'tokens.token': token
+                // 'tokens.token': token // maybe keep for further verification
             }
         )
 
-        if (!admin)
-            throw new Error()
+        if (!admin) {
+            const err = new Error("No admin found")
+            err.status = 401
+            throw err
+        }
 
         req.token = token
         req.admin = admin
         next()
     } catch (error) {
-        res.status(401).send({
-            status: 401,
-            message: 'no authentication'
-        })
+        console.log('error should appear');
+        error.status = 401
+        error.message = 'no authentication'
+        next(error)
     }
 }
 

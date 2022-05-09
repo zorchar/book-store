@@ -26,7 +26,7 @@ const adminSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-            minlength: 8,
+            // minlength: 8,
             // validate(value) {
             //     const passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{0,}$/
             //     if (!passRegex.test(value)) {
@@ -60,6 +60,8 @@ adminSchema.pre('save', async function (next) {
 adminSchema.statics.findAdminByEmailAndPassword = async (email, password) => {
     const admin = await Admin.findOne({ email })
     if (!admin) {
+        console.log('no admin found');
+        console.log(email);
         throw new Error('Unable to login.')
     }
 

@@ -144,17 +144,15 @@ router.patch('/admin/edit_admin', authAdmin, async (req, res, next) => {
     }
 })
 
-router.post('/admin/login', async (req, res) => {
+router.post('/admin/login', async (req, res, next) => {
     try {
         const admin = await Admin.findAdminByEmailAndPassword(req.body.email, req.body.password)
         const token = await admin.generateToken()
         res.send({ admin, token })
     } catch (error) {
-        console.log(error);
-        res.status(400).send({
-            status: 400,
-            message: error.message
-        })
+        console.log('error found in login route');
+        console.log(error.message);
+        return next(error);
     }
 })
 
@@ -179,6 +177,17 @@ router.post('/admin/logout_all', async (req, res) => {
         console.log('logout all');
     } catch (error) {
         res.status(500).send(error)
+    }
+})
+
+router.get('/admin/:adminName', async (req, res, next) => {
+    try {
+        res.render('admin-page',
+            {
+                signInOrOut: `<div id="sign-out" class="nav-item">Sign Out</div>`
+            })
+    } catch (error) {
+        return next(error)
     }
 })
 
