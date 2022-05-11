@@ -62,7 +62,6 @@ router.get('/admin/get_all_users', async (req, res) => {
     }
 })
 
-
 router.patch('/admin/edit_user', authAdmin, async (req, res, next) => {
     try {
         const user = await User.findOne({ email: req.body.email })
@@ -180,12 +179,17 @@ router.post('/admin/logout_all', async (req, res) => {
     }
 })
 
+router.get('/admin/auth_admin', authAdmin, async (req, res, next) => {
+    try {
+        res.send(req.admin)//just something for now
+    } catch (error) {
+        return next(error);
+    }
+})
+
 router.get('/admin/:adminName', async (req, res, next) => {
     try {
-        res.render('admin-page',
-            {
-                signInOrOut: `<div id="sign-out" class="nav-item">Sign Out</div>`
-            })
+        res.render('admin-page')
     } catch (error) {
         return next(error)
     }

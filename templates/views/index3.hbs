@@ -12,44 +12,33 @@
 <body>
     {{>header}}
     <main>
-        {{!-- <div class="modal-container">
-            <div class="backdrop"></div>
-            <div class="modal">I am the modal</div>
-        </div> --}}
         <div id="add-to-cart-modal-container" class="display-none">
             <div id="add-to-cart-modal-backdrop" class="backdrop"></div>
             <div class="modal">
                 <div class="book-container-placeholder"></div>
                 <form id="add-to-cart-form" action="">
-                    {{!-- <form id="sign-in-form" action="/user/login" method="post"> --}}
-
-                        <input type="submit" id="add-to-cart-button" value="add to cart">
-                    </form>
-            </div>
-        </div>
-        <div id="sign-in-modal-container" class="display-none">
-            <div id="sign-in-modal-backdrop" class="backdrop"></div>
-            <div class="modal">I am the modal
-                <form id="sign-in-form" action="">
-                    {{!-- <form id="sign-in-form" action="/user/login" method="post"> --}}
-
-                        <input id="sign-in-email-input" type="text" placeholder="email">
-                        <input id="sign-in-password-input" type="password" placeholder="password">
-                        <input type="submit">
-                    </form>
+                    <input type="submit" id="add-to-cart-button" value="add to cart">
+                </form>
             </div>
         </div>
 
-        This is the home page
+        This is index3
+
+        <div>
+            <input type="text" id="book-search-input" placeholder="book name">
+            <button id="book-search-button">Search</button>
+        </div>
+
         <div id="books-container">
             <div class="_100p">
-                <h1>This is the books container</h1>
             </div>
         </div>
     </main>
-    <script src="../bookRender.js"></script>
+    <script src="../js/utils/general-utils.js"></script>
+    <script src="../js/bookRender.js"></script>
     <script src="../js/utils/cart-util.js"></script>
-    <script src="../index.js"></script>
+    <script src="../js/modals-and-forms.js"></script>
+    <script src="../js/index.js"></script>
 
 </body>
 

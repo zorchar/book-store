@@ -5,6 +5,7 @@ const authUser = async (req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '')
         const data = jwt.verify(token, process.env.SECRET)
+        console.log(data);
         const user = await User.findOne(
             {
                 _id: data._id,
@@ -13,6 +14,7 @@ const authUser = async (req, res, next) => {
         )
 
         if (!user) {
+            console.log('blah blah');
             const err = new Error("No user found")
             err.status = 401
             throw err
@@ -21,10 +23,12 @@ const authUser = async (req, res, next) => {
         req.user = user
         return next()
     } catch (error) {
-        console.log('error should appear');
+        console.log('no authentication');
+        // console.log(error);
         error.status = 401
         error.message = 'no authentication'
-        return next(error)
+        // res.send('no authentication')
+        next(error)
     }
 }
 

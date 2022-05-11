@@ -12,16 +12,50 @@
 <body>
     {{>header}}
     <main>
+        <div id="sign-in-modal-container" class="display-none">
+            <div id="sign-in-modal-backdrop" class="backdrop"></div>
+            <div class="modal">I am the modal
+                <form id="sign-in-form" action="">
+                    <input id="sign-in-email-input" type="email" placeholder="email">
+                    <input id="sign-in-password-input" type="password" placeholder="password">
+                    <input type="submit">
+                </form>
+            </div>
+        </div>
+
+        <div id="sign-up-modal-container" class="display-none">
+            <div id="sign-up-modal-backdrop" class="backdrop"></div>
+            <div class="modal">I am the modal
+                <form id="sign-up-form" action="">
+                    <input id="sign-up-name-input" type="text" placeholder="name">
+                    <input id="sign-up-email-input" type="email" placeholder="email">
+                    <input id="sign-up-password-input" type="password" placeholder="password">
+                    <input type="submit">
+                </form>
+            </div>
+        </div>
+
+        <div id="sign-in-admin-modal-container" class="display-none">
+            <div id="sign-in-admin-modal-backdrop" class="backdrop"></div>
+            <div class="modal">I am the admin modal
+                <form id="sign-in-admin-form" action="">
+                    <input id="sign-in-admin-email-input" type="email" placeholder="email">
+                    <input id="sign-in-admin-password-input" type="password" placeholder="password">
+                    <input type="submit">
+                </form>
+            </div>
+        </div>
+
+
         <div id="books-container">
             <div class="_100p">
-                <h1>This is the books container</h1>
             </div>
         </div>
     </main>
-    {{!--
-    <script src="../js/header.js"></script> --}}
-    <script src="../bookRender.js"></script>
+    <script src="../js/utils/general-utils.js"></script>
+    <script src="../js/bookRender.js"></script>
     <script src="../js/utils/cart-util.js"></script>
+    <script src="../js/modals-and-forms.js"></script>
     <script src="../js/cart.js"></script>
 </body>
 

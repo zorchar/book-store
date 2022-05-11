@@ -37,8 +37,10 @@ router.get('/user/cart', async (req, res, next) => {
 
 router.get('/user/auth_user', authUser, async (req, res, next) => {
     try {
+        console.log('userRouter req.user: ', req.user);
         res.send(req.user)//just something for now
     } catch (error) {
+        console.log('userRouter in error req.user: ', req.user);
         return next(error);
     }
 })
@@ -92,6 +94,8 @@ router.get('/user/:userName', async (req, res, next) => {
 router.use((error, req, res, next) => {
     console.log("hello from error handler")
 
+    if (error.status === 401)
+        return res.send(JSON.stringify('no authentication'))
     res.status(error.status).send(
         {
             status: error.status,

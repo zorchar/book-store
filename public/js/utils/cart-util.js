@@ -39,13 +39,9 @@ const addToCart = async (bookName) => {
                 )
             })
         const res = await response.json()
-        if (!response.ok) { //// fetch does not handle errors. must check response.ok
-            if (res.error === 'no authentication') {
-                addBookToGenCart(bookName)
-            }
-            else throw res
+        if (res === 'no authentication') {
+            addBookToGenCart(bookName)
         }
-        return res
     }
     catch (error) {
         console.log('got to catch in addToCart');
@@ -64,15 +60,13 @@ const getCart = async () => {
                     'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }
             })
-
         const res = await response.json()
-        if (!response.ok) { //// fetch does not handle errors. must check response.ok
-            console.log('got to !response.ok');
-            throw res
+        if (res === 'no authentication') { //// fetch does not handle errors. must check response.ok
+            return JSON.parse(sessionStorage.getItem('cart'))
         }
         return res
     }
     catch (error) {
-        return JSON.parse(sessionStorage.getItem('cart'))
+        console.log(error);
     }
 }

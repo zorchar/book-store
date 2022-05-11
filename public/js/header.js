@@ -15,10 +15,11 @@ document.querySelector('#sign-up')?.addEventListener('click', () => {
 document.querySelector('#home-page').addEventListener('click', async (event) => {
     try {
         const user = await authUser()
-        window.location.replace(url + '/user/' + user.name)
+        if (user.name)
+            return window.location.replace(url + '/user/' + user.name)
+        window.location.replace(url)
     }
     catch (error) {
-        window.location.replace(url)
         console.log(error);
     }
 })
@@ -34,10 +35,9 @@ document.querySelector('#sign-out')?.addEventListener('click', async (event) => 
 })
 
 document.querySelector('#admin-page').addEventListener('click', () => {
-    document.querySelector('#sign-in-admin-modal-container').classList.remove('display-none')
+    document.querySelector('#sign-in-admin-modal-container')?.classList.remove('display-none')
 })
 
-/////////////////////////////////////////////////////////////////////////////////////////////// add modals.js?
 const userLogout = async () => {
     try {
         const response = await fetch(url + '/user/logout',
@@ -48,8 +48,7 @@ const userLogout = async () => {
                     'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 },
             })
-        sessionStorage.setItem('token', null)//maybe change location or add in another location or add verification with database
-        /////// currently no response sent here
+        sessionStorage.setItem('token', null)
     }
     catch (error) {
         console.log('got to catch in userLogout');
@@ -102,7 +101,7 @@ const userLogin = async (email, password) => {
                 )
             })
         const res = await response.json()
-        if (!response.ok) { //// fetch does not handle errors. must check response.ok
+        if (!response.ok) {
             throw res
         }
         sessionStorage.setItem('token', res.token)
@@ -130,7 +129,7 @@ const adminLogin = async (email, password) => {
                 )
             })
         const res = await response.json()
-        if (!response.ok) { //// fetch does not handle errors. must check response.ok
+        if (!response.ok) {
             throw res
         }
         sessionStorage.setItem('token', res.token)
@@ -141,11 +140,11 @@ const adminLogin = async (email, password) => {
         throw error
     }
 }
-///////////////////////////////////////////////////////////////////////
 
 const navBarToSignedIn = () => {
     document.querySelector('#sign-in')?.remove()
     document.querySelector('#sign-up')?.remove()
+    document.querySelector('#admin-page')?.remove()
 
     const signOut = document.createElement('div')
 
