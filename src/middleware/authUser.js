@@ -1,14 +1,14 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/userModel')
 
-const auth = async (req, res, next) => {
+const authUser = async (req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '')
         const data = jwt.verify(token, process.env.SECRET)
         const user = await User.findOne(
             {
                 _id: data._id,
-                // 'tokens.token': token // don't know why Arie added this. check in sadna
+                'tokens.token': token
             }
         )
 
@@ -19,18 +19,13 @@ const auth = async (req, res, next) => {
         }
         req.token = token
         req.user = user
-        next()
+        return next()
     } catch (error) {
         console.log('error should appear');
         error.status = 401
         error.message = 'no authentication'
-        next(error)
-
-        // res.status(401).send({
-        //     status: 401,
-        //     message: 'no authentication'
-        // })
+        return next(error)
     }
 }
 
-module.exports = auth
+module.exports = authUser

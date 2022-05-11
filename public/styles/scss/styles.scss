@@ -37,7 +37,6 @@
         }
 
     }
-
 }
 
 h3 {
@@ -83,6 +82,10 @@ header {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -44%);
+}
+
+#home-page {
+    cursor: pointer;
 }
 
 .display-none {

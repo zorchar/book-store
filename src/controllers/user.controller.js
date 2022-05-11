@@ -87,8 +87,8 @@ const userGet = async (req, res, next) => {
 const userCreate = async (req, res) => {
     const user = new User(req.body)
     try {
-        await user.generateToken()
-        res.status(201).send(user)
+        const token = await user.generateToken()
+        res.status(201).send({ user, token })
     } catch (error) {
         res.status(403).send({
             status: 403,

@@ -31,7 +31,7 @@ const appendElToEl = (elFrom, elTo) => {
     elTo.append(elFrom)
 }
 
-const appendDBBookToContainer = (dbbook, container) => {
+const appendDBBookToContainer = (dbbook, container, quantity = false) => {
     const bookContainer = createBookContainer()
     bookContainer.id = dbbook.name/////////// can cause bugs
     bookContainer.name = dbbook.name
@@ -39,4 +39,9 @@ const appendDBBookToContainer = (dbbook, container) => {
     addAuthorToContainer(dbbook.author.name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()), bookContainer)
     addImageToContainer(dbbook.image, bookContainer, 'book-img-container')
     appendElToEl(bookContainer, container)
+    if (quantity) {
+        const quanDiv = document.createElement('div')
+        quanDiv.innerText = `Quantity: ${quantity}`
+        bookContainer.append(quanDiv)
+    }
 }

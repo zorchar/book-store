@@ -35,20 +35,32 @@
                 <form id="sign-in-form" action="">
                     {{!-- <form id="sign-in-form" action="/user/login" method="post"> --}}
 
-                        <input id="sign-in-email-input" type="text" placeholder="email">
+                        <input id="sign-in-email-input" type="email" placeholder="email">
                         <input id="sign-in-password-input" type="password" placeholder="password">
                         <input type="submit">
                     </form>
             </div>
         </div>
 
+        <div id="sign-up-modal-container" class="display-none">
+            <div id="sign-up-modal-backdrop" class="backdrop"></div>
+            <div class="modal">I am the modal
+                <form id="sign-up-form" action="">
+                    <input id="sign-up-name-input" type="text" placeholder="name">
+                    <input id="sign-up-email-input" type="email" placeholder="email">
+                    <input id="sign-up-password-input" type="password" placeholder="password">
+                    <input type="submit">
+                </form>
+            </div>
+        </div>
+
         <div id="sign-in-admin-modal-container" class="display-none">
-            <div id="sign-in-modal-backdrop" class="backdrop"></div>
+            <div id="sign-in-admin-modal-backdrop" class="backdrop"></div>
             <div class="modal">I am the admin modal
                 <form id="sign-in-admin-form" action="">
                     {{!-- <form id="sign-in-form" action="/user/login" method="post"> --}}
 
-                        <input id="sign-in-admin-email-input" type="text" placeholder="email">
+                        <input id="sign-in-admin-email-input" type="email" placeholder="email">
                         <input id="sign-in-admin-password-input" type="password" placeholder="password">
                         <input type="submit">
                     </form>
@@ -64,6 +76,7 @@
         </div>
     </main>
     <script src="./bookRender.js"></script>
+    <script src="./js/utils/cart-util.js"></script>
     <script src="./index.js"></script>
 </body>
 

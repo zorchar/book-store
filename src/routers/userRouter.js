@@ -1,5 +1,4 @@
 const express = require('express')
-const User = require('../models/userModel')
 const authUser = require('../middleware/authUser')
 const Book = require('../models/bookModel')
 const userController = require('../controllers/user.controller')
@@ -11,7 +10,7 @@ router.route('/user/me')
     .patch(authUser, userController.userUpdate)
     .delete(authUser, userController.userDelete)
 
-router.post('/user/new_user', userController.userCreate)
+router.post('/user/new', userController.userCreate)
 
 router.post('/user/login', userController.userSignIn)//should be /me?
 
@@ -28,6 +27,14 @@ router.get('', async (req, res, next) => {
     }
 })
 
+router.get('/user/cart', async (req, res, next) => {
+    try {
+        res.render('cart')
+    } catch (error) {
+        return next(error)
+    }
+})
+
 router.get('/user/auth_user', authUser, async (req, res, next) => {
     try {
         res.send(req.user)//just something for now
@@ -36,7 +43,7 @@ router.get('/user/auth_user', authUser, async (req, res, next) => {
     }
 })
 
-router.post('/user/add_to_cart', authUser, async (req, res, next) => {
+router.post('/user/add-to-cart', authUser, async (req, res, next) => {
     try {
         const user = req.user
         const book = await Book.findOne({ name: req.body.bookName })
@@ -53,7 +60,7 @@ router.post('/user/add_to_cart', authUser, async (req, res, next) => {
     }
 })
 
-router.get('/user/cart', authUser, async (req, res, next) => {
+router.get('/user/get-cart', authUser, async (req, res, next) => {
     try {
         const user = req.user
         await user.populate(

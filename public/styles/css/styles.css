@@ -76,6 +76,10 @@ header #nav-right-items {
   transform: translate(-50%, -44%);
 }
 
+#home-page {
+  cursor: pointer;
+}
+
 .display-none {
   display: none;
 }
