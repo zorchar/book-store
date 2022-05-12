@@ -37,10 +37,8 @@ router.get('/user/cart', async (req, res, next) => {
 
 router.get('/user/auth_user', authUser, async (req, res, next) => {
     try {
-        console.log('userRouter req.user: ', req.user);
         res.send(req.user)//just something for now
     } catch (error) {
-        console.log('userRouter in error req.user: ', req.user);
         return next(error);
     }
 })

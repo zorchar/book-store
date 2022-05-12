@@ -13,7 +13,25 @@
     {{>header}}
     <main>
 
+
+
+        <div id="add-to-cart-modal-container" class="display-none">
+            <div id="add-to-cart-modal-backdrop" class="backdrop"></div>
+            <div class="modal">
+                <div class="book-container-placeholder"></div>
+                <form action="" id="delete-book">
+                    <input type="submit" value="delete book">
+                </form>
+            </div>
+        </div>
+
         This is the admin page
+
+        <div>
+            <input type="text" id="book-search-input" placeholder="book name">
+            <button id="book-search-button">Search</button>
+        </div>
+
 
 
         <div id="books-container">
@@ -21,7 +39,9 @@
             </div>
         </div>
     </main>
+    <script src="../js/bookRender.js"></script>
     <script src="../js/utils/general-utils.js"></script>
+    <script src="../js/modals-and-forms.js"></script>
     <script src="../js/admin-page.js"></script>
 </body>
 

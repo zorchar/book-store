@@ -1,9 +1,14 @@
 getCart()
     .then((res) => {
-        const cart = document.querySelector('#books-container')
+        const booksContainer = document.querySelector('#books-container')
         res.forEach(element => {
-            appendDBBookToContainer(element.book, cart, element.quantity)
+            appendDBBookToContainer(element.book, booksContainer, element.quantity)
         });
+    })
+    .then(() => {
+        addClickEventToQueryAll('.book-container', async function () {
+            putBookInModal(this)
+        })
     })
     .catch((error) => {
         console.log(error);

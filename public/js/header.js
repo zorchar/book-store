@@ -26,7 +26,7 @@ document.querySelector('#home-page').addEventListener('click', async (event) => 
 
 document.querySelector('#sign-out')?.addEventListener('click', async (event) => {
     try {
-        const user = await userLogout()
+        await userLogout()
         window.location.replace(url)
     }
     catch (error) {

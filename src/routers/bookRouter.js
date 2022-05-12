@@ -1,8 +1,12 @@
 const express = require('express')
 const Book = require('../models/bookModel')
 const retAuthorID = require('../middleware/retAuthorID')
+const bookController = require('../controllers/book.controller')
+const authAdmin = require('../middleware/authAdmin')
 
 const router = new express.Router()
+
+router.delete('/book/delete', authAdmin, bookController.bookDelete)
 
 router.post('/admin/add_book', retAuthorID, async (req, res) => {
     try {

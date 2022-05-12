@@ -12,6 +12,17 @@
 <body>
     {{>header}}
     <main>
+        <div id="add-to-cart-modal-container" class="display-none">
+            <div id="add-to-cart-modal-backdrop" class="backdrop"></div>
+            <div class="modal">
+                <div class="book-container-placeholder"></div>
+                <form id="view-cart-form" action="">
+                    <input type="number" id="change-quantity-input" placeholder="change quantity">
+                    <input type="submit" id="add-to-cart-button" value="change">
+                </form>
+            </div>
+        </div>
+
         <div id="sign-in-modal-container" class="display-none">
             <div id="sign-in-modal-backdrop" class="backdrop"></div>
             <div class="modal">I am the modal

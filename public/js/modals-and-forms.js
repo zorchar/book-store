@@ -65,11 +65,28 @@ document.querySelector('#sign-in-admin-form')?.addEventListener('submit', async 
 document.querySelector('#add-to-cart-form')?.addEventListener('submit', (event) => {
     event.preventDefault()
     addToCartModal.classList.add('display-none')
-    addToCart(addToCartModal.querySelector('.book-container').name)///////////////////// keep on
+    addToCart(addToCartModal.querySelector('.book-container').name)
         .then(() => {
             console.log('book added');
         })
         .catch((error) => {
             console.log(error);
         })
+})
+
+document.querySelector('#view-cart-form')?.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    addToCartModal.classList.add('display-none')
+    const bookName = addToCartModal.querySelector('.book-container').id
+    const newQuantityString = addToCartModal.querySelector('#change-quantity-input').value
+
+    let cart = await getCart()
+    for (let book of cart) {
+        if (book.book.name === bookName)
+            book.quantity = parseInt(newQuantityString)
+    }
+
+    cart = JSON.stringify(cart)
+    sessionStorage.setItem('cart', cart)
+    window.location.replace(url + '/user/cart')
 })
