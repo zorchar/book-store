@@ -16,19 +16,20 @@
             <div id="add-to-cart-modal-backdrop" class="backdrop"></div>
             <div class="modal">
                 <div class="book-container-placeholder"></div>
-                <form id="view-cart-form" action="">
+                <form id="view-cart-form" class="form" action="">
                     <input type="number" id="change-quantity-input" placeholder="change quantity">
                     <input type="submit" id="add-to-cart-button" value="change">
                 </form>
+                <div class="message-container"></div>
             </div>
         </div>
 
         <div id="sign-in-modal-container" class="display-none">
             <div id="sign-in-modal-backdrop" class="backdrop"></div>
-            <div class="modal">I am the modal
-                <form id="sign-in-form" action="">
-                    <input id="sign-in-email-input" type="email" placeholder="email">
-                    <input id="sign-in-password-input" type="password" placeholder="password">
+            <div class="modal">
+                <form id="sign-in-form" class="form" action="">
+                    <input id="sign-in-email-input" type="email" placeholder="email" required>
+                    <input id="sign-in-password-input" type="password" placeholder="password" required>
                     <input type="submit">
                 </form>
             </div>
@@ -36,11 +37,11 @@
 
         <div id="sign-up-modal-container" class="display-none">
             <div id="sign-up-modal-backdrop" class="backdrop"></div>
-            <div class="modal">I am the modal
-                <form id="sign-up-form" action="">
-                    <input id="sign-up-name-input" type="text" placeholder="name">
-                    <input id="sign-up-email-input" type="email" placeholder="email">
-                    <input id="sign-up-password-input" type="password" placeholder="password">
+            <div class="modal">
+                <form id="sign-up-form" class="form" action="">
+                    <input id="sign-up-name-input" type="text" placeholder="name" required>
+                    <input id="sign-up-email-input" type="email" placeholder="email" required>
+                    <input id="sign-up-password-input" type="password" placeholder="password" required>
                     <input type="submit">
                 </form>
             </div>
@@ -48,10 +49,10 @@
 
         <div id="sign-in-admin-modal-container" class="display-none">
             <div id="sign-in-admin-modal-backdrop" class="backdrop"></div>
-            <div class="modal">I am the admin modal
-                <form id="sign-in-admin-form" action="">
-                    <input id="sign-in-admin-email-input" type="email" placeholder="email">
-                    <input id="sign-in-admin-password-input" type="password" placeholder="password">
+            <div class="modal">
+                <form id="sign-in-admin-form" class="form" action="">
+                    <input id="sign-in-admin-email-input" type="email" placeholder="email" required>
+                    <input id="sign-in-admin-password-input" type="password" placeholder="password" required>
                     <input type="submit">
                 </form>
             </div>

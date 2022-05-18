@@ -2,6 +2,7 @@ const Author = require('../models/authorModel')
 
 const retAuthorID = async (req, res, next) => {
     try {
+        console.log(req.body.author);
         let author = await Author.findOne({ name: req.body.author })
         if (!author) {
             author = new Author({ name: req.body.author })

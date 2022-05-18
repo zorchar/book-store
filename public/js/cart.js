@@ -1,14 +1,29 @@
+const editUser = async (fieldsToChangeInObjectForm) => {
+    const response = await fetch(url + '/user/me',
+        {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+            },
+            body: JSON.stringify(fieldsToChangeInObjectForm)
+        })
+    const res = await response.json()
+    return res
+}
+
 getCart()
     .then((res) => {
         const booksContainer = document.querySelector('#books-container')
         res.forEach(element => {
             appendDBBookToContainer(element.book, booksContainer, element.quantity)
         });
-    })
-    .then(() => {
         addClickEventToQueryAll('.book-container', async function () {
             putBookInModal(this)
         })
+
+    })
+    .then(() => {
     })
     .catch((error) => {
         console.log(error);

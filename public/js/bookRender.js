@@ -36,7 +36,7 @@ const appendElToEl = (elFrom, elTo) => {
 const appendDBBookToContainer = (dbbook, container, quantity = false) => {
     const bookContainer = createBookContainer()
     if (dbbook) {
-        bookContainer.id = dbbook.name/////////// can cause bugs
+        bookContainer.id = dbbook.name
         bookContainer.name = dbbook.name
         addNameToContainer(dbbook.name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()), bookContainer)
         addAuthorToContainer(dbbook.author.name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()), bookContainer)
@@ -51,34 +51,21 @@ const appendDBBookToContainer = (dbbook, container, quantity = false) => {
     }
 }
 
-const renderAllBooksOnPage = async () => {
-    try {
-        const dbBooks = await findBooks('')
-        dbBooks.forEach((book) => {
-            appendDBBookToContainer(book, booksContainer)
-        });
-        addClickEventToQueryAll('.book-container', async function () {
-            putBookInModal(this)
-        })
-    } catch (error) {
-        console.log('can not find books');
-    }
-}
-
 const getBook = async (bookName) => {
     const response = await fetch(`${url}/books/${bookName}`)
     if (!response.ok) return console.log(response.statusText)
     return await response.json()
 }
 
-const getBooks = async () => {
-    const response = await fetch(url + '/books')
+const getBooks = async (page, limit) => {
+    const response = await fetch(url + `/books?page=${page}&limit=${limit}`)
     if (!response.ok) return console.log(response.statusText)
     return await response.json()
 }
 
-const findBooks = async (searchString) => {
-    let books = await getBooks()
+const findBooks = async (searchString, page, limit) => {
+    let books = await getBooks(page, limit)
+    books = books.results
 
     books = books.filter((book) => {
         const bookName = book.name
@@ -96,13 +83,48 @@ const findBooks = async (searchString) => {
 const bookSearchInput = document.querySelector('#book-search-input')
 const bookSearchButton = document.querySelector('#book-search-button')
 
-bookSearchButton?.addEventListener('click', async () => {
-    const foundBooks = await findBooks(bookSearchInput.value)
+const renderNextAndPreviousIfNeeded = (page, limit) => {
+    if (page * limit < foundBooks.length)
+        nextButton.classList.remove('display-none')
+    else {
+        nextButton.classList.add('display-none')
+    }
+    if (page > 1)
+        previousButton.classList.remove('display-none')
+    else {
+        previousButton.classList.add('display-none')
+    }
+}
+
+const nextButton = document.querySelector('#next')
+const previousButton = document.querySelector('#previous')
+
+nextButton?.addEventListener('click', async () => {
+    paginate(nextButton)
+})
+
+previousButton?.addEventListener('click', async () => {
+    paginate(previousButton)
+})
+
+const changeNextAndPreviousLinks = (pageNumber) => {
+    nextButton.children[0].id = pageNumber + 1
+    previousButton.children[0].id = pageNumber - 1
+}
+
+const paginate = (button) => {
+    const pageNumber = parseInt(button.children[0].id)
+    changeNextAndPreviousLinks(pageNumber)
+    renderNextAndPreviousIfNeeded(pageNumber, 5)
+    searchRender((pageNumber - 1) * 5)
+}
+
+const searchRender = (startIndex) => {
     booksContainer.replaceChildren()
     if (foundBooks !== 'No books found.') {
-        foundBooks.forEach((book) => {
-            appendDBBookToContainer(book, booksContainer)
-        });
+        for (let i = startIndex; i < startIndex + 5; i++) {
+            appendDBBookToContainer(foundBooks[i], booksContainer)
+        }
         addClickEventToQueryAll('.book-container', async function () {
             putBookInModal(this)
         })
@@ -110,4 +132,12 @@ bookSearchButton?.addEventListener('click', async () => {
     else {
         booksContainer.append(foundBooks)
     }
+}
+
+let foundBooks
+bookSearchButton?.addEventListener('click', async () => {
+    foundBooks = await findBooks(bookSearchInput.value)
+    changeNextAndPreviousLinks(1)
+    renderNextAndPreviousIfNeeded(1, 5)
+    searchRender(0)
 })

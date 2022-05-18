@@ -1,5 +1,29 @@
 * {
   margin: 0;
+  font-family: sans-serif;
+}
+
+body {
+  background: #d8d8e3;
+  color: #614545;
+}
+
+header {
+  z-index: 10;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  display: flex;
+  background: #5959aa;
+  color: white;
+}
+header .nav-item {
+  cursor: pointer;
+  margin: 10px;
+}
+header #nav-right-items {
+  display: flex;
+  margin-left: auto;
 }
 
 #books-container {
@@ -12,48 +36,41 @@
   width: 100%;
   text-align: center;
 }
-#books-container .book-container {
+
+.book-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   cursor: pointer;
   width: 140px;
-  min-width: 20%;
+  min-width: 15%;
+  border: 5px solid #8b8bb1;
+  margin: 5px;
+  border-radius: 10%;
 }
-#books-container .book-container div {
+.book-container div {
   text-align: center;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-#books-container .book-container .book-img-container {
-  width: 140px;
+.book-container .book-img-container {
+  width: 100%;
   height: 200px;
+  align-self: flex-end;
 }
-#books-container .book-container .book-img-container img {
+.book-container .book-img-container img {
   width: 100%;
   height: 100%;
+  border-bottom-left-radius: 10%;
+  border-bottom-right-radius: 10%;
 }
 
 h3 {
   margin-top: 0;
   margin-bottom: 5px;
-}
-
-header {
-  z-index: 10;
-  width: 100%;
-  position: sticky;
-  top: 0;
-  display: flex;
-  background: blue;
-  color: white;
-}
-header .nav-item {
-  cursor: pointer;
-  margin: 10px;
-}
-header #nav-right-items {
-  display: flex;
-  margin-left: auto;
+  max-width: 95%;
 }
 
 .backdrop {
@@ -69,15 +86,75 @@ header #nav-right-items {
   color: white;
   width: 50vw;
   height: 70vh;
-  background: blue;
+  background: #5959aa;
   opacity: 1;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -44%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-radius: 10%;
 }
 
 #home-page {
   cursor: pointer;
+}
+
+#add-book-button {
+  cursor: pointer;
+}
+
+.button {
+  cursor: pointer;
+  margin: 20px;
+  padding: 5px;
+  border: solid 2px #8b8bb1;
+  border-radius: 10%;
+  background: #9393c2;
+  color: #f4f4f7;
+}
+
+.next-previous-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#book-search-button {
+  margin: 5px 0;
+}
+
+::placeholder {
+  color: white;
+}
+
+.message-container {
+  font-weight: 700;
+  color: #ff0000;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+input {
+  min-width: 51%;
+  background: #9393c2;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.submit:active {
+  background: #424279;
 }
 
 .display-none {

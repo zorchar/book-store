@@ -16,59 +16,62 @@
             <div id="add-to-cart-modal-backdrop" class="backdrop"></div>
             <div class="modal">
                 <div class="book-container-placeholder"></div>
-                <form id="add-to-cart-form" action="">
-                    <input type="submit" id="add-to-cart-button" value="add to cart">
+                <form id="add-to-cart-form" class="form" action="">
+                    <input type="submit" class="submit" id="add-to-cart-button" value="add to cart">
                 </form>
+                <div class="message-container"></div>
             </div>
         </div>
 
 
         <div id="sign-in-modal-container" class="display-none">
             <div id="sign-in-modal-backdrop" class="backdrop"></div>
-            <div class="modal">I am the modal
-                <form id="sign-in-form" action="">
-                    <input id="sign-in-email-input" type="email" placeholder="email">
-                    <input id="sign-in-password-input" type="password" placeholder="password">
-                    <input type="submit">
+            <div class="modal">
+                <form id="sign-in-form" class="form" action="">
+                    <input id="sign-in-email-input" type="email" placeholder="email" required>
+                    <input id="sign-in-password-input" type="password" placeholder="password" required>
+                    <input type="submit" class="submit">
                 </form>
             </div>
         </div>
 
         <div id="sign-up-modal-container" class="display-none">
             <div id="sign-up-modal-backdrop" class="backdrop"></div>
-            <div class="modal">I am the modal
-                <form id="sign-up-form" action="">
-                    <input id="sign-up-name-input" type="text" placeholder="name">
-                    <input id="sign-up-email-input" type="email" placeholder="email">
-                    <input id="sign-up-password-input" type="password" placeholder="password">
-                    <input type="submit">
+            <div class="modal">
+                <form id="sign-up-form" class="form" action="">
+                    <input id="sign-up-name-input" type="text" placeholder="name" required>
+                    <input id="sign-up-email-input" type="email" placeholder="email" required>
+                    <input id="sign-up-password-input" type="password" placeholder="password" required>
+                    <input type="submit" class="submit">
                 </form>
             </div>
         </div>
 
         <div id="sign-in-admin-modal-container" class="display-none">
             <div id="sign-in-admin-modal-backdrop" class="backdrop"></div>
-            <div class="modal">I am the admin modal
-                <form id="sign-in-admin-form" action="">
-                    <input id="sign-in-admin-email-input" type="email" placeholder="email">
-                    <input id="sign-in-admin-password-input" type="password" placeholder="password">
-                    <input type="submit">
+            <div class="modal">
+                <form id="sign-in-admin-form" class="form" action="">
+                    <input id="sign-in-admin-email-input" type="email" placeholder="email" required>
+                    <input id="sign-in-admin-password-input" type="password" placeholder="password" required>
+                    <input type="submit" class="submit">
                 </form>
             </div>
-        </div>
-
-
-        This is the home page
-
-        <div>
-            <input type="text" id="book-search-input" placeholder="book name">
-            <button id="book-search-button">Search</button>
         </div>
 
         <div id="books-container">
             <div class="_100p">
             </div>
         </div>
+
+        <div class="next-previous-wrapper">
+            <div id="previous" class="display-none button">Previous
+                <div id="0"></div>
+            </div>
+            <div id="next" class="button">Next
+                <div id="2"></div>
+            </div>
+        </div>
+
     </main>
     <script src="./js/utils/general-utils.js"></script>
     <script src="./js/bookRender.js"></script>

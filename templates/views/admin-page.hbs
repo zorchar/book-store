@@ -13,6 +13,17 @@
     {{>header}}
     <main>
 
+        <div id="add-book-modal-container" class="display-none">
+            <div id="add-book-modal-backdrop" class="backdrop"></div>
+            <div class="modal">
+                <form action="" id="add-book-form">
+                    <input type="text" id="book-name" placeholder="Book name" required>
+                    <input type="text" id="author-name" placeholder="Author name" required>
+                    <input type="text" id="image-url" placeholder="Image URL">
+                    <input type="submit" value="add book">
+                </form>
+            </div>
+        </div>
 
 
         <div id="add-to-cart-modal-container" class="display-none">
@@ -25,19 +36,20 @@
             </div>
         </div>
 
-        This is the admin page
-
-        <div>
-            <input type="text" id="book-search-input" placeholder="book name">
-            <button id="book-search-button">Search</button>
-        </div>
-
-
-
         <div id="books-container">
             <div class="_100p">
             </div>
         </div>
+
+        <div class="next-previous-wrapper">
+            <div id="previous" class="display-none button">Previous
+                <div id="0"></div>
+            </div>
+            <div id="next" class="button">Next
+                <div id="2"></div>
+            </div>
+        </div>
+
     </main>
     <script src="../js/bookRender.js"></script>
     <script src="../js/utils/general-utils.js"></script>

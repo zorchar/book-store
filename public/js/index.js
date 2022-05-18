@@ -1,6 +1,7 @@
 const primaryFunc = async () => {
     redirectIfNeeded()
-    renderAllBooksOnPage()
+    foundBooks = await findBooks(bookSearchInput.value)
+    searchRender(0)
 }
 
 const redirectIfNeeded = async () => {
@@ -33,3 +34,4 @@ authUser()
     })
 
 primaryFunc()
+

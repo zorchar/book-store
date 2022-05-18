@@ -4,6 +4,7 @@ const signInAdminModal = document.querySelector('#sign-in-admin-modal-container'
 const addToCartModal = document.querySelector('#add-to-cart-modal-container')
 
 document.querySelector('#add-to-cart-modal-backdrop')?.addEventListener('click', () => {
+    document.querySelector('#add-to-cart-modal-container').querySelector('.message-container').innerText = ""
     addToCartModal.classList.add('display-none')
 })
 
@@ -76,16 +77,22 @@ document.querySelector('#add-to-cart-form')?.addEventListener('submit', (event) 
 
 document.querySelector('#view-cart-form')?.addEventListener('submit', async (event) => {
     event.preventDefault()
-    addToCartModal.classList.add('display-none')
     const bookName = addToCartModal.querySelector('.book-container').id
     const newQuantityString = addToCartModal.querySelector('#change-quantity-input').value
 
+    if (newQuantityString < 1) {
+        return document.querySelector('#add-to-cart-modal-container').querySelector('.message-container').innerText = 'invalid quantity'
+    }
+
     let cart = await getCart()
     for (let book of cart) {
-        if (book.book.name === bookName)
+        if (book.book?.name === bookName)
             book.quantity = parseInt(newQuantityString)
     }
 
+    await editUser({ cart })
+
+    addToCartModal.classList.add('display-none')
     cart = JSON.stringify(cart)
     sessionStorage.setItem('cart', cart)
     window.location.replace(url + '/user/cart')

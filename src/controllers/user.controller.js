@@ -60,6 +60,7 @@ const userUpdate = async (req, res, next) => {
         res.send(user)
     }
     catch (error) {
+        error.status = 403
         return next(error);
     }
 }

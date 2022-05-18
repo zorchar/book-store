@@ -8,11 +8,12 @@ const addBookToGenCart = async (bookName) => {
         }
         let isExists = false
         cart.forEach((el) => {
-            if (el.book.name == book.name) {
+            if (el.book?.name == book.name) {
                 el.quantity++
                 isExists = true
             }
         })
+
         if (!isExists)
             cart.push({ book, quantity: 1 })
         cart = JSON.stringify(cart)

@@ -73,7 +73,7 @@ const userSignUp = async (name, email, password) => {
                 )
             })
         const res = await response.json()
-        if (!response.ok) { //// fetch does not handle errors. must check response.ok
+        if (!response.ok) {
             throw res
         }
         sessionStorage.setItem('token', res.token)
@@ -153,6 +153,16 @@ const navBarToSignedIn = () => {
     signOut.innerText = 'Sign Out'
 
     document.querySelector('#nav-right-items').append(signOut)
+}
+
+const addAddBookButton = () => {
+    const addBookButton = document.createElement('div')
+
+    addBookButton.classList.add('nav-item')
+    addBookButton.id = 'add-book-button'
+    addBookButton.innerText = 'Add Book'
+
+    document.querySelector('#nav-right-items').append(addBookButton)
 }
 
 const navBarToSignedOut = () => {

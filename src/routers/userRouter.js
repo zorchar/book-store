@@ -37,7 +37,7 @@ router.get('/user/cart', async (req, res, next) => {
 
 router.get('/user/auth_user', authUser, async (req, res, next) => {
     try {
-        res.send(req.user)//just something for now
+        res.send(req.user)
     } catch (error) {
         return next(error);
     }
@@ -103,4 +103,3 @@ router.use((error, req, res, next) => {
 })
 
 module.exports = router
-

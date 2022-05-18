@@ -3,12 +3,13 @@ const Book = require('../models/bookModel')
 const retAuthorID = require('../middleware/retAuthorID')
 const bookController = require('../controllers/book.controller')
 const authAdmin = require('../middleware/authAdmin')
+const paginatedResults = require('../middleware/paginatedResults')
 
 const router = new express.Router()
 
 router.delete('/book/delete', authAdmin, bookController.bookDelete)
 
-router.post('/admin/add_book', retAuthorID, async (req, res) => {
+router.post('/book/add', authAdmin, retAuthorID, async (req, res) => {
     try {
         let book = await Book.findOne({ name: req.body.name })
         if (book)
@@ -23,23 +24,27 @@ router.post('/admin/add_book', retAuthorID, async (req, res) => {
             message: error.message
         })
     }
-
 })
 
-router.get('/books', async (req, res) => {
-    try {
-        const books = await Book.find().populate('author')
-        if (books.length > 0) {
-            res.status(200).send(books)
-        }
-    } catch (error) {
-        res.status(403).send({
-            status: 403,
-            message: error.message
-        })
-    }
-
+router.get('/books', paginatedResults(Book), async (req, res) => {
+    res.send(res.paginatedResults)
 })
+
+// router.get('/books', async (req, res) => {
+//     try {
+//         const books = await Book.find().populate('author')
+//         console.log(books);
+//         if (books.length > 0) {
+//             res.status(200).send(books)
+//         }
+//     } catch (error) {
+//         res.status(403).send({
+//             status: 403,
+//             message: error.message
+//         })
+//     }
+
+// })
 
 router.get('/books/:book', async (req, res, next) => {
     const bookName = req.params.book
