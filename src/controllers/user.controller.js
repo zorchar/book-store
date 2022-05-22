@@ -1,4 +1,5 @@
 const User = require('../models/userModel')
+const Book = require('../models/bookModel')
 
 const userSignOut = async (req, res) => {
     try {
@@ -21,20 +22,6 @@ const userSignIn = async (req, res, next) => {
     }
 }
 
-const userDelete = async (req, res, next) => {
-    try {
-        const email = req.user.email
-        const user = await User.findUserByEmailAndPassword(req.body.email, req.body.password)
-        if (email === user.email) {
-            await User.deleteOne(user)
-            res.send(`deleted ${email}`)
-        }
-    }
-    catch (error) {
-        return next(error);
-    }
-}
-
 const userUpdate = async (req, res, next) => {
     try {
         const user = req.user
@@ -51,26 +38,6 @@ const userUpdate = async (req, res, next) => {
     }
     catch (error) {
         error.status = 403
-        return next(error);
-    }
-}
-
-const userGet = async (req, res, next) => {
-    const _id = req.user._id
-    try {
-        const user = await User.findById(_id).populate(
-            {
-                path: 'cart.book',
-                populate: { path: 'author' }
-            }
-        )
-        if (!user) {
-            const err = new Error("Something went wrong. Can't find user in database.")
-            err.status = 500
-            throw err
-        }
-        res.send(user)
-    } catch (error) {
         return next(error);
     }
 }
@@ -107,6 +74,24 @@ const userRouteToCart = async (req, res, next) => {
     }
 }
 
+const userGetCart = async (req, res, next) => {
+    try {
+        const user = req.user
+        await user.populate(
+            {
+                path: 'cart.book',
+                populate: {
+                    path: 'author',
+                    select: 'name'
+                }
+            }
+        )
+        res.send(user.cart)
+    } catch (error) {
+        return next(error);
+    }
+}
+
 const userAddToCart = async (req, res, next) => {
     try {
         const user = req.user
@@ -126,13 +111,11 @@ const userAddToCart = async (req, res, next) => {
 
 module.exports = {
     userCreate,
-    userDelete,
-    userGet,
     userSignIn,
     userSignOut,
     userUpdate,
     userRouteToCart,
+    userGetCart,
     userAddToCart,
     routeToHomePage,
-
 }

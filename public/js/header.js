@@ -3,9 +3,9 @@ const url = 'http://localhost:3000'
 document.querySelector('#cart')?.addEventListener('click', async () => {
     user = await authUser()
     if (user.name)
-        window.location.replace(url + '/user/' + user.name + '/cart')
+        window.location.replace(url + '/users/' + user.name + '/cart')
     else
-        window.location.replace(url + '/user/cart')
+        window.location.replace(url + '/cart')
 })
 
 document.querySelector('#sign-in')?.addEventListener('click', () => {
@@ -20,7 +20,7 @@ document.querySelector('#home-page').addEventListener('click', async (event) => 
     try {
         const user = await authUser()
         if (user.name)
-            return window.location.replace(url + '/user/' + user.name)
+            return window.location.replace(url + '/users/' + user.name)
         window.location.replace(url)
     }
     catch (error) {
@@ -40,25 +40,13 @@ const addUserLogoutClickEvent = async () => {
     })
 }
 
-addUserLogoutClickEvent().then()
-
-// document.querySelector('#sign-out')?.addEventListener('click', async (event) => {
-//     try {
-//         await userLogout()
-//         window.location.replace(url)
-//     }
-//     catch (error) {
-//         console.log(error);
-//     }
-// })
-
 document.querySelector('#admin-page').addEventListener('click', () => {
     document.querySelector('#sign-in-admin-modal-container')?.classList.remove('display-none')
 })
 
 const userLogout = async () => {
     try {
-        const response = await fetch(url + '/user/logout',
+        const response = await fetch(url + '/users/logout',
             {
                 method: 'GET',
                 headers: {
@@ -76,7 +64,7 @@ const userLogout = async () => {
 
 const userSignUp = async (name, email, password) => {
     try {
-        const response = await fetch(url + '/user/new',
+        const response = await fetch(url + '/users/new',
             {
                 method: 'POST',
                 headers: {
@@ -105,7 +93,7 @@ const userSignUp = async (name, email, password) => {
 
 const userLogin = async (email, password) => {
     try {
-        const response = await fetch(url + '/user/login',
+        const response = await fetch(url + '/users/login',
             {
                 method: 'POST',
                 headers: {

@@ -27,7 +27,7 @@ document.querySelector('#sign-in-form')?.addEventListener('submit', async (event
         const password = document.querySelector('#sign-in-password-input').value
 
         res = await userLogin(email, password)
-        window.location.replace(url + '/user/' + res.user.name)
+        window.location.replace(url + '/users/' + res.user.name)
     }
     catch (error) {
         document.querySelector('#sign-in-modal-container').classList.add('display-none')
@@ -42,7 +42,7 @@ document.querySelector('#sign-up-form')?.addEventListener('submit', async (event
         const password = document.querySelector('#sign-up-password-input').value
 
         res = await userSignUp(name, email, password)
-        window.location.replace(url + '/user/' + res.user.name)
+        window.location.replace(url + '/users/' + res.user.name)
     }
     catch (error) {
         document.querySelector('#sign-up-modal-container').classList.add('display-none')
@@ -99,7 +99,7 @@ document.querySelector('#view-cart-form')?.addEventListener('submit', async (eve
 
     user = await authUser()
     if (user.name)
-        window.location.replace(url + '/user/' + user.name + '/cart')
+        window.location.replace(url + '/users/' + user.name + '/cart')
     else
-        window.location.replace(url + '/user/cart')
+        window.location.replace(url + '/cart')
 })

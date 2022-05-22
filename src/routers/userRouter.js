@@ -7,42 +7,24 @@ const router = new express.Router()
 
 router.get('', userController.routeToHomePage)
 
-router.route('/user/me')
-    // .get(authUser, userController.userGet)
+router.route('/users/me')
     .patch(authUser, userController.userUpdate)
-// .delete(authUser, userController.userDelete)
 
-router.post('/user/new', userController.userCreate)
+router.post('/users/new', userController.userCreate)
 
-router.post('/user/login', userController.userSignIn)//should be /me?
+router.post('/users/login', userController.userSignIn)
 
-router.get('/user/logout', authUser, userController.userSignOut)
+router.get('/users/logout', authUser, userController.userSignOut)
 
-router.get('/user/:user/cart', userController.userRouteToCart)
+router.get('/users/:user/cart', userController.userRouteToCart)
 
-router.get('/user/cart', userController.userRouteToCart)
+router.get('/cart', userController.userRouteToCart)
 
-router.post('/user/add-to-cart', authUser, userController.userAddToCart)
+router.post('/users/add-to-cart', authUser, userController.userAddToCart)
 
-router.get('/user/get-cart', authUser, async (req, res, next) => {
-    try {
-        const user = req.user
-        await user.populate(
-            {
-                path: 'cart.book',
-                populate: {
-                    path: 'author',
-                    select: 'name'
-                }
-            }
-        )
-        res.send(user.cart)
-    } catch (error) {
-        return next(error);
-    }
-})
+router.get('/users/send-cart', authUser, userController.userGetCart)
 
-router.get('/user/auth-user', authUser, async (req, res, next) => {
+router.get('/users/auth-user', authUser, async (req, res, next) => {
     try {
         res.send(req.user)
     } catch (error) {
@@ -50,12 +32,9 @@ router.get('/user/auth-user', authUser, async (req, res, next) => {
     }
 })
 
-router.get('/user/:userName', async (req, res, next) => {
+router.get('/users/:user', async (req, res, next) => {
     try {
-        res.render('user',
-            {
-                signInOrOut: `<div id="sign-out" class="nav-item">Sign Out</div>`
-            })
+        res.render('user')
     } catch (error) {
         return next(error)
     }

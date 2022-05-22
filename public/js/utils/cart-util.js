@@ -26,7 +26,7 @@ const addBookToGenCart = async (bookName) => {
 
 const addToCart = async (bookName) => {
     try {
-        const response = await fetch(url + '/user/add-to-cart',
+        const response = await fetch(url + '/users/add-to-cart',
             {
                 method: 'POST',
                 headers: {
@@ -53,7 +53,7 @@ const addToCart = async (bookName) => {
 
 const getCart = async () => {
     try {
-        const response = await fetch(url + '/user/get-cart',
+        const response = await fetch(url + '/users/send-cart',
             {
                 method: 'GET',
                 headers: {

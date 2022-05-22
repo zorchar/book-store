@@ -11,7 +11,7 @@ const redirectIfNeeded = async () => {
             if (user !== 'no authentication') {
                 document.querySelector('#admin-page').remove()
             }
-            const substringAfterUser = window.location.href.substring(url.length + '/user/'.length)
+            const substringAfterUser = window.location.href.substring(url.length + '/users/'.length)
             if (user.name !== substringAfterUser)
                 window.location.replace(url)
             navBarToSignedIn()
@@ -19,7 +19,7 @@ const redirectIfNeeded = async () => {
         else {
             const user = await authUser()
             if (user.name)
-                window.location.replace(url + '/user/' + user.name)
+                window.location.replace(url + '/users/' + user.name)
             navBarToSignedOut()
         }
     }

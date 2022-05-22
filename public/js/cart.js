@@ -1,5 +1,5 @@
 const updateUserCart = async (cartInObjectForm) => {
-    const response = await fetch(url + '/user/me',
+    const response = await fetch(url + '/users/me',
         {
             method: 'PATCH',
             headers: {
@@ -22,8 +22,6 @@ getCart()
             putBookInModal(this)
         })
 
-    })
-    .then(() => {
     })
     .catch((error) => {
         console.log(error);

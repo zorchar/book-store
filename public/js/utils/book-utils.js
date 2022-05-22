@@ -147,7 +147,7 @@ bookSearchButton?.addEventListener('click', async () => {
         let tempBooks = []
         if (foundBooks?.length > 0) {
             for (let el of foundBooks) {
-                if (el.name.includes(bookSearchInput.value) || el.author.name.includes(bookSearchInput.value)) {
+                if (el?.name.includes(bookSearchInput.value) || el?.author.name.includes(bookSearchInput.value)) {
                     tempBooks.push(el)
                 }
             }

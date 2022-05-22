@@ -1,5 +1,5 @@
 const authUser = async () => {
-    const response = await fetch(url + '/user/auth-user',
+    const response = await fetch(url + '/users/auth-user',
         {
             method: 'Get',
             headers: {
