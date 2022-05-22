@@ -107,7 +107,7 @@ userSchema.methods.generateToken = async function () {
 
 userSchema.methods.addBookToCart = async function (bookID) {
     const user = this
-    const cartMatchingEls = user.cart.filter(e => e.book._id.toString() === bookID.toString())
+    const cartMatchingEls = user.cart.filter(e => e.book?._id.toString() === bookID.toString())
 
     if (cartMatchingEls.length > 0) {
         cartMatchingEls[0].quantity = parseInt(cartMatchingEls[0].quantity) + 1

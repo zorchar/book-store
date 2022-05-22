@@ -24,15 +24,27 @@ document.querySelector('#home-page').addEventListener('click', async (event) => 
     }
 })
 
-document.querySelector('#sign-out')?.addEventListener('click', async (event) => {
-    try {
-        await userLogout()
-        window.location.replace(url)
-    }
-    catch (error) {
-        console.log(error);
-    }
-})
+const addUserLogoutClickEvent = async () => {
+    document.querySelector('#sign-out')?.addEventListener('click', async (event) => {
+        try {
+            await userLogout()
+            window.location.replace(url)
+        }
+        catch (error) {
+            console.log(error);
+        }
+    })
+}
+
+// document.querySelector('#sign-out')?.addEventListener('click', async (event) => {
+//     try {
+//         await userLogout()
+//         window.location.replace(url)
+//     }
+//     catch (error) {
+//         console.log(error);
+//     }
+// })
 
 document.querySelector('#admin-page').addEventListener('click', () => {
     document.querySelector('#sign-in-admin-modal-container')?.classList.remove('display-none')

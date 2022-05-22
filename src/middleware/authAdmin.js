@@ -21,7 +21,6 @@ const authAdmin = async (req, res, next) => {
         req.admin = admin
         return next()
     } catch (error) {
-        console.log('error should appear');
         error.status = 401
         error.message = 'no authentication'
         return next(error)

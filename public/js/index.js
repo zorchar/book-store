@@ -8,14 +8,23 @@ const redirectIfNeeded = async () => {
     try {
         if (window.location.href !== url + '/') {
             const user = await authUser()
+            if (user !== 'no authentication') {
+                navBarToSignedIn()
+                document.querySelector('#admin-page').remove()
+            }
+            else {
+                navBarToSignedOut()
+            }
             const substringAfterUser = window.location.href.substring(url.length + '/user/'.length)
             if (user.name !== substringAfterUser)
                 window.location.replace(url)
         }
         else {
             const user = await authUser()
-            if (user.name)
+            if (user.name) {
                 window.location.replace(url + '/user/' + user.name)
+            }
+            navBarToSignedOut()
         }
     }
     catch (error) {
@@ -23,15 +32,4 @@ const redirectIfNeeded = async () => {
             window.location.replace(url)
     }
 }
-authUser()
-    .then((res) => {
-        if (res === 'no authentication')
-            return
-        document.querySelector('#admin-page').remove()
-    })
-    .catch((error) => {
-        console.log('authUser.catch, error: ', error);
-    })
-
 primaryFunc()
-

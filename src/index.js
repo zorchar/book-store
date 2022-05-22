@@ -10,6 +10,7 @@ const userRouter = require('./routers/userRouter')
 const bookRouter = require('./routers/bookRouter')
 const authorRouter = require('./routers/authorRouter')
 const adminRouter = require('./routers/adminRouter')
+const errorHandler = require('./middleware/errorHandler')
 
 const publicDirectoryPath = path.join(__dirname, '../public')
 const viewsPath = path.join(__dirname, '../templates/views')
@@ -24,11 +25,15 @@ app.set('views', viewsPath)
 hbs.registerPartials(partialsPath)
 
 app.use(express.static(publicDirectoryPath))
-app.use(userRouter)
 app.use(bookRouter)
 app.use(authorRouter)
 app.use(adminRouter)
+app.use(userRouter)
+app.use(errorHandler)
 
+app.all("*", (req, res) => {
+    res.status(400).render('error-page')
+})
 
 app.listen(port, () => {
     console.log('Server connected, port:', port)

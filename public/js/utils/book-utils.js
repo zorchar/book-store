@@ -136,7 +136,27 @@ const searchRender = (startIndex) => {
 
 let foundBooks
 bookSearchButton?.addEventListener('click', async () => {
-    foundBooks = await findBooks(bookSearchInput.value)
+    if (window.location.href.includes('cart')) {
+        const foundCart = await getCart()
+        foundBooks = []
+        if (foundCart?.length > 0) {
+            for (let el of foundCart) {
+                foundBooks.push(el?.book)
+            }
+        }
+        let tempBooks = []
+        if (foundBooks?.length > 0) {
+            for (let el of foundBooks) {
+                if (el.name.includes(bookSearchInput.value) || el.author.name.includes(bookSearchInput.value)) {
+                    tempBooks.push(el)
+                }
+            }
+        }
+        foundBooks = tempBooks
+    }
+    else {
+        foundBooks = await findBooks(bookSearchInput.value)
+    }
     changeNextAndPreviousLinks(1)
     renderNextAndPreviousIfNeeded(1, 5)
     searchRender(0)

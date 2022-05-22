@@ -89,17 +89,4 @@ router.get('/user/:userName', async (req, res, next) => {
     }
 })
 
-router.use((error, req, res, next) => {
-    console.log("hello from error handler")
-
-    if (error.status === 401)
-        return res.send(JSON.stringify('no authentication'))
-    res.status(error.status).send(
-        {
-            status: error.status,
-            error: error.message
-        }
-    )
-})
-
 module.exports = router

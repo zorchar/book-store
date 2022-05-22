@@ -1,4 +1,4 @@
-const editUser = async (fieldsToChangeInObjectForm) => {
+const updateUserCart = async (cartInObjectForm) => {
     const response = await fetch(url + '/user/me',
         {
             method: 'PATCH',
@@ -6,7 +6,7 @@ const editUser = async (fieldsToChangeInObjectForm) => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${sessionStorage.getItem('token')}`
             },
-            body: JSON.stringify(fieldsToChangeInObjectForm)
+            body: JSON.stringify(cartInObjectForm)
         })
     const res = await response.json()
     return res

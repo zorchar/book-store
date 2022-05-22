@@ -7,7 +7,6 @@ const paginatedResults = (model) => {
         const endIndex = page * limit
 
         const results = {}
-
         if (endIndex < await model.countDocuments())
             results.next =
             {

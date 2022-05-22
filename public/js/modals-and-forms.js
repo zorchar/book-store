@@ -90,7 +90,7 @@ document.querySelector('#view-cart-form')?.addEventListener('submit', async (eve
             book.quantity = parseInt(newQuantityString)
     }
 
-    await editUser({ cart })
+    await updateUserCart({ cart })
 
     addToCartModal.classList.add('display-none')
     cart = JSON.stringify(cart)

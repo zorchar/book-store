@@ -10,16 +10,6 @@ const userSignOut = async (req, res) => {
     }
 }
 
-const userSignOutAll = async (req, res) => {
-    try {
-        req.user.tokens = []
-        await req.user.save()
-        res.send()//maybe send user?
-    } catch (error) {
-        res.status(500).send(error)
-    }
-}
-
 const userSignIn = async (req, res, next) => {
     try {
         const user = await User.findUserByEmailAndPassword(req.body.email, req.body.password)
@@ -104,6 +94,5 @@ module.exports = {
     userGet,
     userSignIn,
     userSignOut,
-    userSignOutAll,
     userUpdate
 }

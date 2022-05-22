@@ -10,7 +10,19 @@
 </head>
 
 <body>
-    {{>header}}
+    <header>
+        <div id="home-page" class="nav-item">Home Page</div>
+        <div>
+            <input type="text" id="book-search-input" placeholder="book name">
+            <button id="book-search-button" class="button">Search</button>
+        </div>
+        <div id="nav-right-items">
+            {{{signInOrOut}}}
+            <div id="cart" class="nav-item">Cart</div>
+            <div id="admin-page" class="nav-item">Admin</div>
+            <script src="/js/header.js"></script>
+        </div>
+    </header>
     <main>
         <div id="add-to-cart-modal-container" class="display-none">
             <div id="add-to-cart-modal-backdrop" class="backdrop"></div>
@@ -22,12 +34,10 @@
                 <div class="message-container"></div>
             </div>
         </div>
-
         <div id="books-container">
             <div class="_100p">
             </div>
         </div>
-
         <div class="next-previous-wrapper">
             <div id="previous" class="display-none button">Previous
                 <div id="0"></div>
@@ -36,10 +46,9 @@
                 <div id="2"></div>
             </div>
         </div>
-
     </main>
     <script src="../js/utils/general-utils.js"></script>
-    <script src="../js/bookRender.js"></script>
+    <script src="../js/utils/book-utils.js"></script>
     <script src="../js/utils/cart-util.js"></script>
     <script src="../js/modals-and-forms.js"></script>
     <script src="../js/index.js"></script>

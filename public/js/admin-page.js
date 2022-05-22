@@ -41,9 +41,7 @@ document.querySelector('#add-book-form').addEventListener('submit', async (event
 
     const res = await addBook(bookName, authorName, url)
     if (res.message) {
-        const div = document.createElement('div')
-        div.innerText = res.message
-        return document.querySelector('#add-book-modal-container').querySelector('.modal').append(div)
+        return document.querySelector('#add-book-modal-container').querySelector('.message-container').innerText = res.message
     }
     window.location.replace(window.location.href)
 })
@@ -57,7 +55,9 @@ document.querySelector('#delete-book').addEventListener('submit', async (event) 
 })
 
 document.querySelector('#add-book-modal-backdrop').addEventListener('click', () => {
-    document.querySelector('#add-book-modal-container').classList.add('display-none')
+    const bookModalContainer = document.querySelector('#add-book-modal-container')
+    bookModalContainer.querySelector('.message-container').innerText = ""
+    bookModalContainer.classList.add('display-none')
 })
 
 const primaryFunc = async () => {
