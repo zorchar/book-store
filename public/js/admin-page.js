@@ -1,5 +1,5 @@
 const deleteBook = async (bookName) => {
-    const response = await fetch(url + '/book/delete',
+    const response = await fetch(url + '/book/' + bookName,
         {
             method: 'DELETE',
             headers: {
@@ -73,15 +73,7 @@ const primaryFunc = async () => {
     foundBooks = await findBooks(bookSearchInput.value)
     searchRender(0)
 
-    document.querySelector('#sign-out')?.addEventListener('click', async (event) => {
-        try {
-            await userLogout()
-            window.location.replace(url)
-        }
-        catch (error) {
-            console.log(error);
-        }
-    })
+    await addUserLogoutClickEvent()
 
     document.querySelector('#add-book-button').addEventListener('click', () => {
         document.querySelector('#add-book-modal-container').classList.remove('display-none')

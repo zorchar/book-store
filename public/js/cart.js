@@ -34,15 +34,7 @@ authUser()
         if (res !== 'no authentication') {
             navBarToSignedIn()
             document.querySelector('#admin-page')?.remove()
-            document.querySelector('#sign-out')?.addEventListener('click', async (event) => {
-                try {
-                    const user = await userLogout()
-                    window.location.replace(url)
-                }
-                catch (error) {
-                    console.log(error);
-                }
-            })
+            addUserLogoutClickEvent().then()
         }
         else {
             navBarToSignedOut()

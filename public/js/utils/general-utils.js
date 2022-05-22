@@ -1,5 +1,5 @@
 const authUser = async () => {
-    const response = await fetch(url + '/user/auth_user',
+    const response = await fetch(url + '/user/auth-user',
         {
             method: 'Get',
             headers: {
@@ -17,7 +17,7 @@ const authUser = async () => {
 }
 
 const authAdmin = async () => {
-    const response = await fetch(url + '/admin/auth_admin',
+    const response = await fetch(url + '/admin/auth-admin',
         {
             method: 'Get',
             headers: {

@@ -4,7 +4,7 @@ const authAdmin = require('../middleware/authAdmin')
 
 const router = new express.Router()
 
-router.post('/admin/add_admin', async (req, res, next) => {
+router.post('/admin/add-admin', async (req, res, next) => {
     const admin = new Admin(req.body)
     try {
         await admin.generateToken()
@@ -40,7 +40,7 @@ router.post('/admin/logout', authAdmin, async (req, res) => {
     }
 })
 
-router.get('/admin/auth_admin', authAdmin, async (req, res, next) => {
+router.get('/admin/auth-admin', authAdmin, async (req, res, next) => {
     try {
         res.send(req.admin)
     } catch (error) {

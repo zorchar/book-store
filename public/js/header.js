@@ -1,7 +1,11 @@
 const url = 'http://localhost:3000'
 
-document.querySelector('#cart')?.addEventListener('click', () => {
-    window.location.replace(url + '/user/cart')
+document.querySelector('#cart')?.addEventListener('click', async () => {
+    user = await authUser()
+    if (user.name)
+        window.location.replace(url + '/user/' + user.name + '/cart')
+    else
+        window.location.replace(url + '/user/cart')
 })
 
 document.querySelector('#sign-in')?.addEventListener('click', () => {
@@ -35,6 +39,8 @@ const addUserLogoutClickEvent = async () => {
         }
     })
 }
+
+addUserLogoutClickEvent().then()
 
 // document.querySelector('#sign-out')?.addEventListener('click', async (event) => {
 //     try {
@@ -153,7 +159,7 @@ const adminLogin = async (email, password) => {
     }
 }
 
-const navBarToSignedIn = () => {
+const navBarToSignedIn = async () => {
     document.querySelector('#sign-in')?.remove()
     document.querySelector('#sign-up')?.remove()
     document.querySelector('#admin-page')?.remove()
@@ -165,6 +171,7 @@ const navBarToSignedIn = () => {
     signOut.innerText = 'Sign Out'
 
     document.querySelector('#nav-right-items').append(signOut)
+    await addUserLogoutClickEvent()
 }
 
 const addAddBookButton = () => {
@@ -177,7 +184,7 @@ const addAddBookButton = () => {
     document.querySelector('#nav-right-items').append(addBookButton)
 }
 
-const navBarToSignedOut = () => {
+const navBarToSignedOut = async () => {
     document.querySelector('#sign-out')?.remove()
 
     const signIn = document.createElement('div')
@@ -193,4 +200,11 @@ const navBarToSignedOut = () => {
     const navRightItems = document.querySelector('#nav-right-items')
     navRightItems.insertBefore(signUp, navRightItems.firstChild)
     navRightItems.insertBefore(signIn, navRightItems.firstChild)
+
+    document.querySelector('#sign-in')?.addEventListener('click', () => {
+        signInModal.classList.remove('display-none')
+    })
+    document.querySelector('#sign-up')?.addEventListener('click', () => {
+        signUpModal.classList.remove('display-none')
+    })
 }

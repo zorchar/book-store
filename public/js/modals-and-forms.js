@@ -77,6 +77,7 @@ document.querySelector('#add-to-cart-form')?.addEventListener('submit', (event) 
 
 document.querySelector('#view-cart-form')?.addEventListener('submit', async (event) => {
     event.preventDefault()
+
     const bookName = addToCartModal.querySelector('.book-container').id
     const newQuantityString = addToCartModal.querySelector('#change-quantity-input').value
 
@@ -95,5 +96,10 @@ document.querySelector('#view-cart-form')?.addEventListener('submit', async (eve
     addToCartModal.classList.add('display-none')
     cart = JSON.stringify(cart)
     sessionStorage.setItem('cart', cart)
-    window.location.replace(url + '/user/cart')
+
+    user = await authUser()
+    if (user.name)
+        window.location.replace(url + '/user/' + user.name + '/cart')
+    else
+        window.location.replace(url + '/user/cart')
 })

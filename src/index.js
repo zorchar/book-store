@@ -31,6 +31,7 @@ app.use(adminRouter)
 app.use(userRouter)
 app.use(errorHandler)
 
+
 app.all("*", (req, res) => {
     res.status(400).render('error-page')
 })

@@ -88,11 +88,51 @@ const userCreate = async (req, res) => {
     }
 }
 
+const routeToHomePage = async (req, res, next) => {
+    try {
+        res.render('index',
+            {
+                signInOrOut: `<div id="sign-in" class="nav-item">Sign In</div><div id="sign-up" class="nav-item">Sign Up</div>`
+            })
+    } catch (error) {
+        return next(error)
+    }
+}
+
+const userRouteToCart = async (req, res, next) => {
+    try {
+        res.render('cart')
+    } catch (error) {
+        return next(error)
+    }
+}
+
+const userAddToCart = async (req, res, next) => {
+    try {
+        const user = req.user
+        const book = await Book.findOne({ name: req.body.bookName })
+        await user.addBookToCart(book._id)
+        await user.populate(
+            {
+                path: 'cart.book',
+                populate: { path: 'author' }
+            }
+        )
+        res.send(user.cart)
+    } catch (error) {
+        return next(error);
+    }
+}
+
 module.exports = {
     userCreate,
     userDelete,
     userGet,
     userSignIn,
     userSignOut,
-    userUpdate
+    userUpdate,
+    userRouteToCart,
+    userAddToCart,
+    routeToHomePage,
+
 }
