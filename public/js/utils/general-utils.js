@@ -12,12 +12,11 @@ const authUser = async () => {
     if (!response.ok) {
         throw res
     }
-
     return res
 }
 
 const authAdmin = async () => {
-    const response = await fetch(url + '/admin/auth-admin',
+    const response = await fetch(url + '/admins/auth',
         {
             method: 'Get',
             headers: {

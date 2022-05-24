@@ -3,7 +3,7 @@ const Author = require('../models/authorModel')
 
 const router = new express.Router()
 
-router.post('/admin/add_author', async (req, res) => {
+router.post('/admins/add_author', async (req, res) => {
     const author = new Author(req.body)
     try {
         await author.save()

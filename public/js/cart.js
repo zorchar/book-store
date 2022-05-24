@@ -31,7 +31,6 @@ authUser()
     .then((res) => {
         if (res !== 'no authentication') {
             navBarToSignedIn()
-            document.querySelector('#admin-page')?.remove()
             addUserLogoutClickEvent().then()
         }
         else {

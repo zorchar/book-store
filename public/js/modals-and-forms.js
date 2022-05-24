@@ -56,10 +56,10 @@ document.querySelector('#sign-in-admin-form')?.addEventListener('submit', async 
         const password = document.querySelector('#sign-in-admin-password-input').value
 
         res = await adminLogin(email, password)
-        window.location.replace(url + '/admin/' + res.admin.name)
+        window.location.replace(url + '/admins/' + res.admin.name)
     }
     catch (error) {
-        signInModal.classList.add('display-none')
+        signInModal?.classList.add('display-none')
     }
 })
 

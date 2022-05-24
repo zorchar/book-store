@@ -62,7 +62,10 @@ document.querySelector('#add-book-modal-backdrop').addEventListener('click', () 
 
 const primaryFunc = async () => {
     try {
-        await authAdmin()
+        const admin = await authAdmin()
+        if (!admin.name) {
+            window.location.replace(url + '/admins')
+        }
     }
     catch {
         window.location.replace(url)

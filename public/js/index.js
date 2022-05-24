@@ -8,9 +8,6 @@ const redirectIfNeeded = async () => {
     try {
         if (window.location.href !== url + '/') {
             const user = await authUser()
-            if (user !== 'no authentication') {
-                document.querySelector('#admin-page').remove()
-            }
             const substringAfterUser = window.location.href.substring(url.length + '/users/'.length)
             if (user.name !== substringAfterUser)
                 window.location.replace(url)

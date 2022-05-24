@@ -57,10 +57,7 @@ const userCreate = async (req, res) => {
 
 const routeToHomePage = async (req, res, next) => {
     try {
-        res.render('index',
-            {
-                signInOrOut: `<div id="sign-in" class="nav-item">Sign In</div><div id="sign-up" class="nav-item">Sign Up</div>`
-            })
+        res.render('index')
     } catch (error) {
         return next(error)
     }

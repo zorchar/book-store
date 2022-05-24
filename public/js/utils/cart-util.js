@@ -62,7 +62,7 @@ const getCart = async () => {
                 }
             })
         const res = await response.json()
-        if (res === 'no authentication') { //// fetch does not handle errors. must check response.ok
+        if (res === 'no authentication') {
             return JSON.parse(sessionStorage.getItem('cart'))
         }
         return res

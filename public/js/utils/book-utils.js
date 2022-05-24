@@ -20,7 +20,7 @@ const addAuthorToContainer = (authorName, container) => {
     container.append(authorNameContainer)
 }
 
-const addImageToContainer = (imageLink, container, imgContainerClassName = 'img-container') => { // later think about class name and classname implementation
+const addImageToContainer = (imageLink, container, imgContainerClassName = 'img-container') => {
     const img = document.createElement('img')
     const imgContainer = document.createElement('div')
     img.src = imageLink
@@ -38,9 +38,9 @@ const appendDBBookToContainer = (dbbook, container, quantity = false) => {
     if (dbbook) {
         bookContainer.id = dbbook.name
         bookContainer.name = dbbook.name
+        addImageToContainer(dbbook.image, bookContainer, 'book-img-container')
         addNameToContainer(dbbook.name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()), bookContainer)
         addAuthorToContainer(dbbook.author.name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()), bookContainer)
-        addImageToContainer(dbbook.image, bookContainer, 'book-img-container')
         appendElToEl(bookContainer, container)
         if (quantity) {
             const quanDiv = document.createElement('div')
