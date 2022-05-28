@@ -1,3 +1,4 @@
+{{!--
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,6 +53,95 @@
     <script src="/js/utils/identity-utils.js"></script>
     <script src="../js/index.js"></script>
 
+</body>
+
+</html> --}}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/css/styles.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <div id="home-page" class="nav-item">Home Page</div>
+        <div>
+            <input type="text" id="book-search-input" placeholder="book name">
+            <button id="book-search-button" class="button">Search</button>
+        </div>
+        <div id="nav-right-items">
+            <div id="cart" class="nav-item">Cart</div>
+            <script src="/js/header.js"></script>
+        </div>
+    </header>
+    <main>
+        <div id="add-to-cart-modal-container" class="display-none">
+            <div id="add-to-cart-modal-backdrop" class="backdrop"></div>
+            <div class="modal">
+                <div class="book-container-placeholder"></div>
+                <form id="add-to-cart-form" class="form" action="">
+                    <input type="submit" class="submit" id="add-to-cart-button" value="add to cart">
+                </form>
+                <div class="message-container"></div>
+            </div>
+        </div>
+        <div id="sign-in-modal-container" class="display-none">
+            <div id="sign-in-modal-backdrop" class="backdrop"></div>
+            <div class="modal">
+                <form id="sign-in-form" class="form" action="">
+                    <input id="sign-in-email-input" type="email" placeholder="email" required>
+                    <input id="sign-in-password-input" type="password" placeholder="password" required>
+                    <input type="submit" class="submit">
+                </form>
+            </div>
+        </div>
+        <div id="sign-up-modal-container" class="display-none">
+            <div id="sign-up-modal-backdrop" class="backdrop"></div>
+            <div class="modal">
+                <form id="sign-up-form" class="form" action="">
+                    <input id="sign-up-name-input" type="text" placeholder="name" required>
+                    <input id="sign-up-email-input" type="email" placeholder="email" required>
+                    <input id="sign-up-password-input" type="password" placeholder="password" required>
+                    <input type="submit" class="submit">
+                </form>
+            </div>
+        </div>
+        <div id="books-container">
+            {{#each res.results}}
+            <div class="book-container" id="{{this.name}}">
+                <div class="book-img-container"><img src="{{this.image}}"></div>
+                <div>
+                    <h3>{{this.name}}</h3>
+                </div>
+                <div>{{this.author}}</div>
+                <div>{{this.price}}</div>
+            </div> {{/each}}
+        </div>
+        <div class="next-previous-wrapper">
+            {{#if res.previous}}
+            <div id="previous" class="button">Previous
+                <div id="{{res.previous.page}}"></div>
+            </div>
+            {{/if}}
+            {{#if res.next}}
+            <div id="next" class="button">Next
+                <div id="{{res.next.page}}"></div>
+            </div>
+            {{/if}}
+        </div>
+    </main>
+    <script src="/js/utils/general-utils.js"></script>
+    <script src="/js/utils/book-utils.js"></script>
+    <script src="/js/utils/cart-util.js"></script>
+    <script src="/js/modals-and-forms.js"></script>
+    <script src="/js/utils/identity-utils.js"></script>
+    <script src="/js/index.js"></script>
 </body>
 
 </html>

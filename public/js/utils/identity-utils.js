@@ -2,7 +2,7 @@ const url = 'http://localhost:3000'
 
 const userLogout = async () => {
     try {
-        const response = await fetch(url + '/users/logout',
+        await fetch(url + '/users/logout',
             {
                 method: 'GET',
                 headers: {

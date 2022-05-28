@@ -18,6 +18,7 @@
         </div>
         <div id="nav-right-items">
             <div id="cart" class="nav-item">Cart</div>
+            <div id="edit-book-button" class="nav-item">Edit Book</div>
             <script src="/js/header.js"></script>
         </div>
     </header>
@@ -29,7 +30,24 @@
                     <input type="text" id="book-name" placeholder="Book name" required>
                     <input type="text" id="author-name" placeholder="Author name" required>
                     <input type="text" id="image-url" placeholder="Image URL">
+                    <input type="text" id="description" placeholder="Description">
+                    <input type="number" id="price" placeholder="Price">
                     <input type="submit" value="add book">
+                </form>
+                <div class="message-container"></div>
+            </div>
+        </div>
+        <div id="edit-book-modal-container" class="display-none">
+            <div id="edit-book-modal-backdrop" class="backdrop"></div>
+            <div class="modal">
+                <form action="" class="form" id="edit-book-form">
+                    <input type="text" id="edit-current-book-name" placeholder="Current book name" required>
+                    <input type="text" id="edit-book-name" placeholder="Book name">
+                    <input type="text" id="edit-author-name" placeholder="Author name">
+                    <input type="text" id="edit-image-url" placeholder="Image URL">
+                    <input type="text" id="edit-description" placeholder="Description">
+                    <input type="number" id="edit-price" placeholder="Price">
+                    <input type="submit" value="edit book">
                 </form>
                 <div class="message-container"></div>
             </div>
@@ -45,16 +63,27 @@
             </div>
         </div>
         <div id="books-container">
-            <div class="_100p">
-            </div>
+            {{#each res.results}}
+            <div class="book-container" id="{{this.name}}">
+                <div class="book-img-container"><img src="{{this.image}}"></div>
+                <div>
+                    <h3>{{this.name}}</h3>
+                </div>
+                <div>{{this.author}}</div>
+                <div>{{this.price}}</div>
+            </div> {{/each}}
         </div>
         <div class="next-previous-wrapper">
-            <div id="previous" class="display-none button">Previous
-                <div id="0"></div>
+            {{#if res.previous}}
+            <div id="previous" class="button">Previous
+                <div id="{{res.previous.page}}"></div>
             </div>
+            {{/if}}
+            {{#if res.next}}
             <div id="next" class="button">Next
-                <div id="2"></div>
+                <div id="{{res.next.page}}"></div>
             </div>
+            {{/if}}
         </div>
     </main>
     <script src="/js/utils/book-utils.js"></script>

@@ -1,18 +1,23 @@
 const express = require('express')
-const Book = require('../models/bookModel')
 const bookController = require('../controllers/book.controller')
-const retAuthorID = require('../middleware/retAuthorID')
+// const retAuthorID = require('../middleware/retAuthorID')
 const authAdmin = require('../middleware/authAdmin')
 const paginatedResults = require('../middleware/paginatedResults')
 
 const router = new express.Router()
 
-router.delete('/book/:book', authAdmin, bookController.bookDelete)
+router.delete('/books/:book', authAdmin, bookController.bookDelete)
 
-router.post('/book/add', authAdmin, retAuthorID, bookController.bookAdd)
+router.patch('/books/:book', authAdmin, bookController.bookEdit)
 
-router.get('/books', paginatedResults(Book), async (req, res) => {
-    res.send(res.paginatedResults)
+// router.post('/books/add', authAdmin, retAuthorID, bookController.bookAdd)
+
+router.post('/books/add', authAdmin, bookController.bookAdd)
+
+router.get('/all-books', bookController.booksGet)
+
+router.get('/books', paginatedResults, async (req, res) => {
+    res.send(res.paginatedResults.results)
 })
 
 router.get('/books/:book', bookController.bookGet)

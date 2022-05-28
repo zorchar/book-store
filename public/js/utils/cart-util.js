@@ -2,22 +2,22 @@ const addBookToGenCart = async (bookName) => {
     try {
         const book = await getBook(bookName)
         let cart = []
-        if (sessionStorage.getItem('cart')) {
+        if (sessionStorage.getItem('cart') && sessionStorage.getItem('cart') !== 'null') {
             cart = sessionStorage.getItem('cart')
             cart = JSON.parse(cart)
         }
         let isExists = false
         cart.forEach((el) => {
-            if (el.book?.name == book.name) {
+            if (el?.book?.name == book.name) {
                 el.quantity++
                 isExists = true
             }
         })
-
         if (!isExists)
-            cart.push({ book, quantity: 1 })
+            cart.push({ book: book, quantity: 1 })
         cart = JSON.stringify(cart)
         sessionStorage.setItem('cart', cart)
+        alert('book added to cart')
     }
     catch (error) {
         return error
@@ -41,8 +41,10 @@ const addToCart = async (bookName) => {
             })
         const res = await response.json()
         if (res === 'no authentication') {
-            addBookToGenCart(bookName)
+            return addBookToGenCart(bookName)
         }
+        user = await authUser()
+        alert('book added to cart')
     }
     catch (error) {
         console.log('got to catch in addToCart');
@@ -66,6 +68,27 @@ const getCart = async () => {
             return JSON.parse(sessionStorage.getItem('cart'))
         }
         return res
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+const emptyCart = async () => {
+    try {
+        const response = await fetch(url + '/users/empty-cart',
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            })
+        const res = await response.json()
+        if (res === 'no authentication') {
+            sessionStorage.setItem('cart', null)
+        }
+        window.location.replace(window.location.href)
     }
     catch (error) {
         console.log(error);

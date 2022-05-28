@@ -36,10 +36,10 @@ header {
     justify-content: space-around;
     flex-wrap: wrap;
 
-    ._100p {
-        width: 100%;
-        text-align: center;
-    }
+    // ._100p {
+    //     width: 100%;
+    //     text-align: center;
+    // }
 
 }
 
@@ -173,6 +173,17 @@ input {
     display: flex;
     justify-content: center;
     margin-top: 150px;
+}
+
+.desc-container {
+    width: 70%;
+}
+
+.total_price-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .display-none {

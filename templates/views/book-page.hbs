@@ -5,7 +5,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/css/styles.css">
+    <script src="/js/header.js" defer></script>
+    <script src="/js/utils/identity-utils.js" defer></script>
+    <script src="/js/utils/book-utils.js" defer></script>
+    <script src="/js/utils/cart-util.js" defer></script>
+    <script src="/js/utils/general-utils.js" defer></script>
+    <script src="/js/modals-and-forms.js" defer></script>
+    <script src="/js/book-page.js" defer></script>
+    <link rel="stylesheet" href="/styles/css/styles.css">
+
     <title>Document</title>
 </head>
 
@@ -18,20 +26,9 @@
         </div>
         <div id="nav-right-items">
             <div id="cart" class="nav-item">Cart</div>
-            <script src="/js/header.js"></script>
         </div>
     </header>
     <main>
-        <div id="add-to-cart-modal-container" class="display-none">
-            <div id="add-to-cart-modal-backdrop" class="backdrop"></div>
-            <div class="modal">
-                <div class="book-container-placeholder"></div>
-                <form id="add-to-cart-form" class="form" action="">
-                    <input type="submit" class="submit" id="add-to-cart-button" value="add to cart">
-                </form>
-                <div class="message-container"></div>
-            </div>
-        </div>
         <div id="sign-in-modal-container" class="display-none">
             <div id="sign-in-modal-backdrop" class="backdrop"></div>
             <div class="modal">
@@ -54,36 +51,14 @@
             </div>
         </div>
         <div id="books-container">
-            {{!-- <div class="_100p"></div> --}}
-            {{#each res.results}}
-            <div class="book-container" id="{{this.name}}">
-                <div class="book-img-container"><img src="{{this.image}}"></div>
-                <div>
-                    <h3>{{this.name}}</h3>
-                </div>
-                <div>{{this.author}}</div>
-                <div>{{this.price}}</div>
-            </div> {{/each}}
-        </div>
-        <div class="next-previous-wrapper">
-            {{#if res.previous}}
-            <div id="previous" class="button">Previous
-                <div id="{{res.previous.page}}"></div>
+            <div class="_100p">
             </div>
-            {{/if}}
-            {{#if res.next}}
-            <div id="next" class="button">Next
-                <div id="{{res.next.page}}"></div>
-            </div>
-            {{/if}}
         </div>
+        <form id="add-to-cart-form" class="form" action="">
+            <input type="submit" class="submit" id="add-to-cart-button" value="add to cart">
+        </form>
+
     </main>
-    <script src="./js/utils/general-utils.js"></script>
-    <script src="./js/utils/book-utils.js"></script>
-    <script src="./js/utils/cart-util.js"></script>
-    <script src="./js/modals-and-forms.js"></script>
-    <script src="/js/utils/identity-utils.js"></script>
-    <script src="./js/index.js"></script>
 </body>
 
 </html>

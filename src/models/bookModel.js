@@ -5,30 +5,34 @@ const bookSchema = mongoose.Schema(
         name: {
             type: String,
             trim: true,
-            required: true,
+            required: [true, "Name must be provided"],
             lowercase: true,
             unique: true,
         },
         author: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Author',
+            type: String,
             trim: true,
-            required: true
+            lowercase: true,
+            required: [true, "Author name must be provided"]
         },
         image: {
             type: String,
-        }
+        },
+        description: {
+            type: String,
+            required: [true, "Must provide description"]
+        },
+        price: {
+            type: Number,
+            required: true,
+            min: [0, "Price can't be negative"],
+            default: 0,
+        },
     },
     {
         timestamps: true
     }
 )
-
-const populateAuthor = async (bookID) => {
-    const book = await Book.findById(bookID)
-
-    await book.populate('author')
-}
 
 const Book = mongoose.model("Book", bookSchema)
 

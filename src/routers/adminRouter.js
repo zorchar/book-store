@@ -1,6 +1,7 @@
 const express = require('express')
 const authAdmin = require('../middleware/authAdmin')
 const adminController = require('../controllers/admin.controller')
+const paginatedResults = require('../middleware/paginatedResults')
 
 const router = new express.Router()
 
@@ -26,9 +27,12 @@ router.get('/admins', async (req, res, next) => {
     }
 })
 
-router.get('/admins/:admin', async (req, res, next) => {
+router.get('/admins/:admin', paginatedResults, async (req, res, next) => {
     try {
-        res.render('admin-page')
+        res.render('admin-page',
+            {
+                res: res.paginatedResults
+            })
     } catch (error) {
         if (error.message === 'no authentication') {
         }

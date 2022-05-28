@@ -1,5 +1,3 @@
-const booksContainer = document.querySelector('#books-container')
-
 const createBookContainer = () => {
     const div = document.createElement('div')
     div.classList.add('book-container')
@@ -29,8 +27,17 @@ const addImageToContainer = (imageLink, container, imgContainerClassName = 'img-
     container.append(imgContainer)
 }
 
-const appendElToEl = (elFrom, elTo) => {
-    elTo.append(elFrom)
+const addPriceToContainer = (price, container) => {
+    const priceContainer = document.createElement('div')
+    priceContainer.innerText = "Price: " + price
+    container.append(priceContainer)
+}
+
+const addDescriptionToContainer = (description, container) => {
+    const descContainer = document.createElement('div')
+    descContainer.classList.add('desc-container')
+    descContainer.innerText = description
+    container.append(descContainer)
 }
 
 const appendDBBookToContainer = (dbbook, container, quantity = false) => {
@@ -40,8 +47,9 @@ const appendDBBookToContainer = (dbbook, container, quantity = false) => {
         bookContainer.name = dbbook.name
         addImageToContainer(dbbook.image, bookContainer, 'book-img-container')
         addNameToContainer(dbbook.name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()), bookContainer)
-        addAuthorToContainer(dbbook.author.name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()), bookContainer)
-        appendElToEl(bookContainer, container)
+        addAuthorToContainer(dbbook.author.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()), bookContainer)
+        addPriceToContainer(dbbook.price, bookContainer)
+        container.append(bookContainer)
         if (quantity) {
             const quanDiv = document.createElement('div')
             quanDiv.classList.add('quantity')
@@ -52,32 +60,34 @@ const appendDBBookToContainer = (dbbook, container, quantity = false) => {
 }
 
 const getBook = async (bookName) => {
-    const response = await fetch(`${url}/books/${bookName}`)
+    const response = await fetch(`${url}/books/${bookName}`,
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Is-Fetch': `true`
+            },
+        }
+    )
     if (!response.ok) return console.log(response.statusText)
     return await response.json()
 }
 
-const getBooks = async (page, limit) => {
-    const response = await fetch(url + `/books?page=${page}&limit=${limit}`)
+const getBooks = async () => {
+    const response = await fetch(url + `/books`)
     if (!response.ok) return console.log(response.statusText)
     return await response.json()
 }
 
-const findBooks = async (searchString, page, limit) => {
-    let books = await getBooks(page, limit)
-    books = books.results
+const getAllBooks = async () => {
+    const response = await fetch(url + `/all-books`)
+    if (!response.ok) return console.log(response.statusText)
+    return await response.json()
+}
 
-    books = books.filter((book) => {
-        const bookName = book.name
-        const authorName = book.author.name
-        if (bookName.includes(searchString.toLowerCase()) || authorName.includes(searchString.toLowerCase()))
-            return book
-    })
-
-    if (books.length > 0) {
-        return books
-    }
-    return 'No books found.'
+const findBooks = (searchString) => {
+    const href = window.location.href.slice(0, window.location.href.indexOf('?'))
+    window.location.replace(href + `?search=` + searchString)
 }
 
 const bookSearchInput = document.querySelector('#book-search-input')
@@ -114,19 +124,24 @@ const changeNextAndPreviousLinks = (pageNumber) => {
 
 const paginate = (button) => {
     const pageNumber = parseInt(button.children[0].id)
-    changeNextAndPreviousLinks(pageNumber)
-    renderNextAndPreviousIfNeeded(pageNumber, 5)
-    searchRender((pageNumber - 1) * 5)
+    const queryStartLocation = window.location.href.indexOf('?')
+    const href = window.location.href.slice(0, queryStartLocation !== -1 ? queryStartLocation : window.location.href.length)
+    const searchString = sessionStorage.getItem('searchString') ? sessionStorage.getItem('searchString') : ""
+    return window.location.replace(href + '?search=' + searchString + '&limit=5&page=' + pageNumber)
 }
 
 const searchRender = (startIndex) => {
+    const booksContainer = document.querySelector('#books-container')
     booksContainer.replaceChildren()
     if (foundBooks !== 'No books found.') {
         for (let i = startIndex; i < startIndex + 5; i++) {
             appendDBBookToContainer(foundBooks[i], booksContainer)
         }
         addClickEventToQueryAll('.book-container', async function () {
-            putBookInModal(this)
+            if (window.location.href.includes(url + '/admins/'))
+                putBookInModal(this)
+            else
+                window.location.replace(url + '/books/' + this.name)
         })
     }
     else {
@@ -136,6 +151,7 @@ const searchRender = (startIndex) => {
 
 let foundBooks
 bookSearchButton?.addEventListener('click', async () => {
+    sessionStorage.setItem('searchString', bookSearchInput.value)
     if (window.location.href.includes('cart')) {
         const foundCart = await getCart()
         foundBooks = []
@@ -147,7 +163,7 @@ bookSearchButton?.addEventListener('click', async () => {
         let tempBooks = []
         if (foundBooks?.length > 0) {
             for (let el of foundBooks) {
-                if (el?.name.includes(bookSearchInput.value) || el?.author.name.includes(bookSearchInput.value)) {
+                if (el?.name.includes(bookSearchInput.value) || el?.author.includes(bookSearchInput.value)) {
                     tempBooks.push(el)
                 }
             }
@@ -155,9 +171,8 @@ bookSearchButton?.addEventListener('click', async () => {
         foundBooks = tempBooks
     }
     else {
-        foundBooks = await findBooks(bookSearchInput.value)
+        foundBooks = findBooks(bookSearchInput.value)
     }
-    changeNextAndPreviousLinks(1)
-    renderNextAndPreviousIfNeeded(1, 5)
+    bookSearchInput.value = ""
     searchRender(0)
 })

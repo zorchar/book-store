@@ -63,10 +63,21 @@ document.querySelector('#sign-in-admin-form')?.addEventListener('submit', async 
     }
 })
 
+// document.querySelector('#add-to-cart-form')?.addEventListener('submit', (event) => {
+//     event.preventDefault()
+//     addToCartModal.classList.add('display-none')
+//     addToCart(addToCartModal.querySelector('.book-container').name)
+//         .then(() => {
+//             console.log('book added');
+//         })
+//         .catch((error) => {
+//             console.log(error);
+//         })
+// })
+
 document.querySelector('#add-to-cart-form')?.addEventListener('submit', (event) => {
     event.preventDefault()
-    addToCartModal.classList.add('display-none')
-    addToCart(addToCartModal.querySelector('.book-container').name)
+    addToCart(document.querySelector('.book-container').id)
         .then(() => {
             console.log('book added');
         })
@@ -81,7 +92,7 @@ document.querySelector('#view-cart-form')?.addEventListener('submit', async (eve
     const bookName = addToCartModal.querySelector('.book-container').id
     const newQuantityString = addToCartModal.querySelector('#change-quantity-input').value
 
-    if (newQuantityString < 1) {
+    if (newQuantityString < 0) {
         return document.querySelector('#add-to-cart-modal-container').querySelector('.message-container').innerText = 'invalid quantity'
     }
 
@@ -90,6 +101,8 @@ document.querySelector('#view-cart-form')?.addEventListener('submit', async (eve
         if (book.book?.name === bookName)
             book.quantity = parseInt(newQuantityString)
     }
+
+    cart = cart.filter(book => book.quantity > 0)
 
     await updateUserCart({ cart })
 

@@ -115,8 +115,6 @@ userSchema.methods.addBookToCart = async function (bookID) {
     else
         user.cart.push({ book: bookID })
     await user.save()
-
-    // return { book }
 }
 
 userSchema.methods.toJSON = function () {
