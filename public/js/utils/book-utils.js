@@ -108,6 +108,13 @@ const renderNextAndPreviousIfNeeded = (page, limit) => {
 
 const nextButton = document.querySelector('#next')
 const previousButton = document.querySelector('#previous')
+const pageNumberButtons = document.querySelectorAll('.page-number')
+
+pageNumberButtons.forEach((el) => {
+    el.addEventListener('click', async () => {
+        paginate(el)
+    })
+})
 
 nextButton?.addEventListener('click', async () => {
     paginate(nextButton)
@@ -127,7 +134,7 @@ const paginate = (button) => {
     const queryStartLocation = window.location.href.indexOf('?')
     const href = window.location.href.slice(0, queryStartLocation !== -1 ? queryStartLocation : window.location.href.length)
     const searchString = sessionStorage.getItem('searchString') ? sessionStorage.getItem('searchString') : ""
-    return window.location.replace(href + '?search=' + searchString + '&limit=5&page=' + pageNumber)
+    return window.location.replace(href + '?search=' + searchString + '&limit=4&page=' + pageNumber)
 }
 
 const searchRender = (startIndex) => {

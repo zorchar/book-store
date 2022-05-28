@@ -55,14 +55,6 @@ const userCreate = async (req, res) => {
     }
 }
 
-// const routeToHomePage = async (req, res, next) => {
-//     try {
-//         res.render('index')
-//     } catch (error) {
-//         return next(error)
-//     }
-// }
-
 const routeToHomePage = async (req, res, next) => {
     try {
         const skip = req.skip
@@ -89,37 +81,12 @@ const userRouteToCart = async (req, res, next) => {
 const userGetCart = async (req, res, next) => {
     try {
         const user = req.user
-        await user.populate(
-            {
-                path: 'cart.book',
-                populate: {
-                    path: 'author',
-                    select: 'name'
-                }
-            }
-        )
+        await user.populate('cart.book')
         res.send(user.cart)
     } catch (error) {
         return next(error);
     }
 }
-
-// const userAddToCart = async (req, res, next) => {
-//     try {
-//         const user = req.user
-//         const book = await Book.findOne({ name: req.body.bookName })
-//         await user.addBookToCart(book._id)
-//         await user.populate(
-//             {
-//                 path: 'cart.book',
-//                 populate: { path: 'author' }
-//             }
-//         )
-//         res.send(user.cart)
-//     } catch (error) {
-//         return next(error);
-//     }
-// }
 
 const userAddToCart = async (req, res, next) => {
     try {

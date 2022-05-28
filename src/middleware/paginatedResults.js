@@ -1,26 +1,37 @@
 const Book = require('../models/bookModel')
 
 const paginatedResults = async (req, res, next) => {
-    const limit = parseInt(req.query.limit) || 5
+    const limit = parseInt(req.query.limit) || 4
     const page = parseInt(req.query.page) || 1
 
     const startIndex = (page - 1) * limit
     const endIndex = page * limit
+    const documentCount = await Book.countDocuments()
+    const pagesCount = Math.ceil(documentCount / limit)
+
+    const pages = []
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
+    }
 
     const results = {}
-    if (endIndex < await Book.countDocuments())
+    results.pages = pages
+
+    if (endIndex < documentCount) {
         results.next =
         {
             page: page + 1,
             limit
         }
-
+        delete results.pages[page - 1]
+    }
     if (startIndex > 0) {
         results.previous =
         {
             page: page - 1,
             limit
         }
+        delete results.pages[page - 1]
     }
 
     try {

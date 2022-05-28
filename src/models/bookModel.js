@@ -6,13 +6,13 @@ const bookSchema = mongoose.Schema(
             type: String,
             trim: true,
             required: [true, "Name must be provided"],
-            lowercase: true,
+            // lowercase: true,
             unique: true,
         },
         author: {
             type: String,
             trim: true,
-            lowercase: true,
+            // lowercase: true,
             required: [true, "Author name must be provided"]
         },
         image: {

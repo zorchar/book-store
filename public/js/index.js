@@ -1,13 +1,8 @@
 const primaryFunc = async () => {
     redirectIfNeeded()
     addClickEventToQueryAll('.book-container', async function () {
-        // if (window.location.href.includes(url + '/admins/'))
-        //     putBookInModal(this)
-        // else
         window.location.replace(url + '/books/' + this.id)
     })
-    // foundBooks = await findBooks(bookSearchInput.value)
-    // searchRender(0)
 }
 
 const redirectIfNeeded = async () => {

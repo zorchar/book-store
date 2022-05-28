@@ -54,7 +54,6 @@
             </div>
         </div>
         <div id="books-container">
-            {{!-- <div class="_100p"></div> --}}
             {{#each res.results}}
             <div class="book-container" id="{{this.name}}">
                 <div class="book-img-container"><img src="{{this.image}}"></div>
@@ -71,6 +70,15 @@
                 <div id="{{res.previous.page}}"></div>
             </div>
             {{/if}}
+
+
+            {{#each res.pages}}
+            <div class="button page-number">{{this}}
+                <div id="{{this}}"></div>
+            </div>
+            {{/each}}
+
+
             {{#if res.next}}
             <div id="next" class="button">Next
                 <div id="{{res.next.page}}"></div>

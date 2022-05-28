@@ -6,8 +6,6 @@ const res = require('express/lib/response')
 
 const router = new express.Router()
 
-// router.get('', userController.routeToHomePage)
-
 router.get('', paginatedResults, (req, res, next) => {
     res.render('index',
         {
@@ -41,14 +39,6 @@ router.get('/users/auth-user', authUser, async (req, res, next) => {
         return next(error);
     }
 })
-
-// router.get('/users/:user',  async (req, res, next) => {
-//     try {
-//         res.render('user')
-//     } catch (error) {
-//         return next(error)
-//     }
-// })
 
 router.get('/users/:user', paginatedResults, async (req, res, next) => {
     res.render('user',
