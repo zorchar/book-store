@@ -55,6 +55,7 @@ const addToCart = async (bookName) => {
 
 const getCart = async () => {
     try {
+        document.querySelector('#total-price').innerText = ''
         const response = await fetch(url + '/users/send-cart',
             {
                 method: 'GET',

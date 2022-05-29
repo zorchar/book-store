@@ -79,6 +79,11 @@
                 <div id="{{res.previous.page}}"></div>
             </div>
             {{/if}}
+            {{#each res.pages}}
+            <div class="button page-number">{{this}}
+                <div id="{{this}}"></div>
+            </div>
+            {{/each}}
             {{#if res.next}}
             <div id="next" class="button">Next
                 <div id="{{res.next.page}}"></div>

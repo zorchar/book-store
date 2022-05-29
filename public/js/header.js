@@ -14,8 +14,9 @@ document.querySelector('#sign-up')?.addEventListener('click', () => {
     signUpModal.classList.remove('display-none')
 })
 
-document.querySelector('#home-page').addEventListener('click', async (event) => {
+document.querySelector('#home-page').addEventListener('click', async () => {
     try {
+        sessionStorage.setItem('searchString', '')
         const user = await authUser()
         if (user.name)
             return window.location.replace(url + '/users/' + user.name)

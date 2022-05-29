@@ -9,15 +9,16 @@ const redirectIfNeeded = async () => {
     try {
         const user = await authUser()
         const currentUrl = window.location.href
-        if (currentUrl !== url + '/' && !currentUrl.includes('?')) {
+        if (currentUrl !== url + '/') {
             const substringAfterUser = window.location.href.substring(url.length + '/users/'.length)
-            if (user.name !== substringAfterUser)
+            if (user.name !== substringAfterUser && !currentUrl.includes('?'))
                 window.location.replace(url)
             navBarToSignedIn()
         }
         else {
-            if (user.name && !currentUrl.includes('?'))
+            if (user.name && !currentUrl.includes('?')) {
                 window.location.replace(url + '/users/' + user.name)
+            }
             navBarToSignedOut()
         }
     }

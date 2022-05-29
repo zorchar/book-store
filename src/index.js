@@ -8,7 +8,7 @@ require('./db/mongoose')
 
 const userRouter = require('./routers/userRouter')
 const bookRouter = require('./routers/bookRouter')
-const authorRouter = require('./routers/authorRouter')
+// const authorRouter = require('./routers/authorRouter')
 const adminRouter = require('./routers/adminRouter')
 const errorHandler = require('./middleware/errorHandler')
 
@@ -26,7 +26,7 @@ hbs.registerPartials(partialsPath)
 
 app.use(express.static(publicDirectoryPath))
 app.use(bookRouter)
-app.use(authorRouter)
+// app.use(authorRouter)
 app.use(adminRouter)
 app.use(userRouter)
 app.use(errorHandler)

@@ -86,7 +86,8 @@ const getAllBooks = async () => {
 }
 
 const findBooks = (searchString) => {
-    const href = window.location.href.slice(0, window.location.href.indexOf('?'))
+    const queryStartLocation = window.location.href.indexOf('?')
+    const href = window.location.href.slice(0, queryStartLocation !== -1 ? queryStartLocation : window.location.href.length)
     window.location.replace(href + `?search=` + searchString)
 }
 

@@ -9,7 +9,7 @@ body {
 }
 
 header {
-    height: 80px;
+    min-height: 80px;
     z-index: 10;
     width: 100%;
     position: sticky;
@@ -18,6 +18,7 @@ header {
     background: #5959aa;
     color: white;
     align-items: center;
+    justify-content: space-between;
 
     .nav-item {
         cursor: pointer;
@@ -27,6 +28,8 @@ header {
     #nav-right-items {
         display: flex;
         margin-left: auto;
+        flex-wrap: wrap;
+        justify-content: end;
     }
 }
 
@@ -35,12 +38,6 @@ header {
     width: 100%;
     justify-content: space-around;
     flex-wrap: wrap;
-
-    // ._100p {
-    //     width: 100%;
-    //     text-align: center;
-    // }
-
 }
 
 .book-container {

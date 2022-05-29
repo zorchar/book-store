@@ -6,13 +6,13 @@ const paginatedResults = async (req, res, next) => {
 
     const startIndex = (page - 1) * limit
     const endIndex = page * limit
-    const documentCount = await Book.countDocuments().where({
+    const documentsFound = await Book.find({
         $or: [
             { name: { "$regex": `${req.query.search || ""}`, "$options": "i" } },
             { author: { "$regex": `${req.query.search || ""}`, "$options": "i" } }
         ]
     })
-    const pagesCount = Math.ceil(documentCount / limit)
+    const pagesCount = Math.ceil(documentsFound.length / limit)
 
     const pages = []
     for (let i = 1; i <= pagesCount; i++) {
@@ -21,14 +21,14 @@ const paginatedResults = async (req, res, next) => {
 
     const results = {}
     results.pages = pages
-    delete results.pages[page - 1]
 
-    if (endIndex < documentCount) {
+    if (endIndex < documentsFound.length) {
         results.next =
         {
             page: page + 1,
             limit
         }
+        delete results.pages[page - 1]
     }
     if (startIndex > 0) {
         results.previous =
@@ -36,15 +36,11 @@ const paginatedResults = async (req, res, next) => {
             page: page - 1,
             limit
         }
+        delete results.pages[page - 1]
     }
 
     try {
-        results.results = await Book.find({
-            $or: [
-                { name: { "$regex": `${req.query.search || ""}`, "$options": "i" } },
-                { author: { "$regex": `${req.query.search || ""}`, "$options": "i" } }
-            ]
-        }).limit(limit).skip(startIndex)
+        results.results = documentsFound.slice(startIndex, startIndex + limit)
         res.paginatedResults = results
         next()
     } catch (error) {

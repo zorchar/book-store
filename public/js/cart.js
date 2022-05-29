@@ -16,7 +16,7 @@ getCart()
     .then((res) => {
         const booksContainer = document.querySelector('#books-container')
         let totalPrice = 0
-        if (res) {
+        if (res?.length > 0) {
             res.forEach(element => {
                 appendDBBookToContainer(element.book, booksContainer, element.quantity)
                 if (element?.book)
@@ -25,13 +25,13 @@ getCart()
             addClickEventToQueryAll('.book-container', async function () {
                 putBookInModal(this)
             })
-            if (totalPrice === 0) {
-                document.querySelector('#checkout-button').classList.add('display-none')
-                return document.querySelector('#total-price').innerText = 'No books in cart!'
-            }
-            document.querySelector('#checkout-button').classList.remove('display-none')
-            document.querySelector('#total-price').innerText = 'Total price: ' + totalPrice
         }
+        if (totalPrice === 0) {
+            document.querySelector('#checkout-button').classList.add('display-none')
+            return document.querySelector('#total-price').innerText = 'No books in cart!'
+        }
+        document.querySelector('#checkout-button').classList.remove('display-none')
+        document.querySelector('#total-price').innerText = 'Total price: ' + totalPrice
     })
     .catch((error) => {
         console.log(error);
